@@ -36,15 +36,10 @@ const Bio = () => {
       )}
       {author?.firstName && (
         <p>
-          Written by <strong>{author.firstName}</strong>
-          {` `}
-          {author?.description || null}
-          {` `}
-          {author?.twitter && (
+          For more writing, follow me on Twitter
             <a href={`https://twitter.com/archydeb`}>
-              You should follow them on Twitter
+              @ArchydeB
             </a>
-          )}
         </p>
       )}
     </div>

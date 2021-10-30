@@ -5,7 +5,7 @@ import parse from "html-react-parser"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
-import Tagline from "../components/tagline"
+
 import Image from "gatsby-image"
 
 const BlogIndex = ({
@@ -30,7 +30,7 @@ const BlogIndex = ({
   return (
     <Layout isHomePage>
       <Seo title="All posts" />
-      <Tagline />
+
 
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
@@ -53,7 +53,7 @@ const BlogIndex = ({
                     <Image
                       fluid={featuredImage.fluid}
                       alt={featuredImage.alt}
-                      style={{ marginBottom: 50 }}
+                      style={{ margin: 50}}
                     />
           )}
                   <h2 sx={{fontFamily: 'monospace', color: 'primary'}} >

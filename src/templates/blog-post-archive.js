@@ -5,6 +5,8 @@ import parse from "html-react-parser"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
+import Tagline from "../components/tagline"
+import Image from "gatsby-image"
 
 const BlogIndex = ({
   data,
@@ -28,12 +30,15 @@ const BlogIndex = ({
   return (
     <Layout isHomePage>
       <Seo title="All posts" />
-
-      <Bio />
+      <Tagline />
 
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
           const title = post.title
+          const featuredImage = {
+            fluid: post.featuredImage?.node?.localFile?.childImageSharp?.fluid,
+            alt: post.featuredImage?.node?.alt || ``,
+          }
 
           return (
             <li key={post.uri}>
@@ -42,8 +47,16 @@ const BlogIndex = ({
                 itemScope
                 itemType="http://schema.org/Article"
               >
+            
                 <header>
-                  <h2>
+                {featuredImage?.fluid && (
+                    <Image
+                      fluid={featuredImage.fluid}
+                      alt={featuredImage.alt}
+                      style={{ marginBottom: 50 }}
+                    />
+          )}
+                  <h2 sx={{fontFamily: 'monospace', color: 'primary'}} >
                     <Link to={post.uri} itemProp="url">
                       <span itemProp="headline">{parse(title)}</span>
                     </Link>
@@ -83,6 +96,18 @@ export const pageQuery = graphql`
         date(formatString: "MMMM DD, YYYY")
         title
         excerpt
+        featuredImage {
+          node {
+            altText
+            localFile {
+              childImageSharp {
+                fluid(maxWidth: 1000, quality: 100) {
+                  ...GatsbyImageSharpFluid_tracedSVG
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

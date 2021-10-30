@@ -29,7 +29,11 @@ module.exports = {
         url:
           process.env.WPGRAPHQL_URL ||
           `https://deberker.com/archy/graphql`,
+          
       },
+      develop: {
+        hardCacheMediaFiles: true,
+       },
     },
 
     /**
@@ -53,6 +57,7 @@ module.exports = {
      */
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    'gatsby-plugin-theme-ui',
 
     {
       // See https://www.gatsbyjs.com/plugins/gatsby-plugin-manifest/?=gatsby-plugin-manifest
@@ -76,5 +81,15 @@ module.exports = {
      * To learn more, visit: https://gatsby.dev/offline
      */
     // `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-plugin-google-fonts`,
+      options: {
+        fonts: [
+          `limelight`,
+          `source sans pro\:300,400,400i,700` // you can also specify font weights and styles
+        ],
+        display: 'swap'
+      }
+    }
   ],
 }

@@ -24,7 +24,7 @@ const Layout = ({ isHomePage, children }) => {
     <div className="global-wrapper" data-is-root-path={isHomePage}>
       <header className="global-header">
         {isHomePage ? (
-          <><img src={logo} alt="Logo" width='200px' style={{display: 'block', margin: "0 auto"}}/>  
+          <><img src={logo} alt="Archy in Freelancing Mode" className='logo' width='200px'/>  
           <h1 className="main-heading" >
             <Link to="/">{parse(title)}</Link>
             

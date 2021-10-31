@@ -9,8 +9,9 @@ import Seo from "../components/seo"
 
 import Image from "gatsby-image"
 import { jsx } from "theme-ui"
-import { Card, Grid, Box } from "theme-ui"
-
+import { Card, Grid, Box, Flex, Button } from "theme-ui"
+import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 const BlogIndex = ({
   data,
   pageContext: { nextPagePath, previousPagePath },
@@ -81,14 +82,25 @@ const BlogIndex = ({
           )
         })}
       </ol>
-
-      {previousPagePath && (
-        <>
-          <Link to={previousPagePath}>Previous page</Link>
-          <br />
-        </>
-      )}
-      {nextPagePath && <Link to={nextPagePath}>Next page</Link>}
+      <Flex columns={[2]} sx={{ justifyContent: ["space-between"] }}>
+        {previousPagePath && (
+          <Box>
+            <Link className="pageButton" to={previousPagePath}>
+              <FontAwesomeIcon icon={faArrowLeft} sx={{ mx: 2 }} />
+              Previous page
+            </Link>
+            <br />
+          </Box>
+        )}
+        {nextPagePath && (
+          <Box>
+            <Link className="pageButton" to={nextPagePath}>
+              Next page
+              <FontAwesomeIcon icon={faArrowRight} sx={{ mx: 2 }} />
+            </Link>
+          </Box>
+        )}
+      </Flex>
     </Layout>
   )
 }

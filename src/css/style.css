@@ -88,7 +88,9 @@ body {
 }
 
 footer {
-  padding: var(--spacing-6) var(--spacing-0);
+  padding: var(--spacing-6) var(--spacing-0) var(--spacing-0) var(--spacing-0);
+  font-family: var(--fontFamily-sans);
+  text-align: center;
 }
 
 hr {
@@ -404,6 +406,12 @@ a:focus {
   margin: 0 auto;
   width: 200px;
 }
+
+.pageButton {
+  color: var(--color-primary);
+  font-family: var(--fontFamily-sans);
+}
+
 /* Media queries */
 
 @media (max-width: 42rem) {

@@ -8,8 +8,13 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-brands-svg-icons": "^5.15.4",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.16",
     "gatsby": "^3.3.0",
     "gatsby-image": "^3.3.0",
+    "gatsby-plugin-fontawesome-css": "^1.1.0",
     "gatsby-plugin-google-fonts": "^1.0.1",
     "gatsby-plugin-manifest": "^3.3.0",
     "gatsby-plugin-offline": "^4.3.0",

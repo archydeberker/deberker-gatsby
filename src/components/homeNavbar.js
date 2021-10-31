@@ -17,7 +17,7 @@ const HomeNavbar = ({ title }) => {
         width="200px"
       />
       <h1 className="main-heading">
-        <Link to="/">{parse(title)}</Link>
+        <Link href="/">{parse(title)}</Link>
       </h1>
 
       <Flex sx={{ margin: "0 auto", justifyContent: "center" }}>

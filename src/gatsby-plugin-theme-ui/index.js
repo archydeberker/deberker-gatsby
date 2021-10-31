@@ -15,6 +15,16 @@ export default {
     body: 1.5,
     heading: 1.125,
   },
+  links: {
+    bold: {
+      fontWeight: "bold",
+    },
+    nav: {
+      fontWeight: "bold",
+      color: "inherit",
+      textDecoration: "none",
+    },
+  },
   fontSizes: [12, 14, 16, 20, 24, 32, 48, 64, 72],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   cards: {

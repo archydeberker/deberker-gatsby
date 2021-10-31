@@ -2,7 +2,7 @@ import React from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import parse from "html-react-parser"
 import logo from "../../content/assets/freelance-logo.png"
-
+import Navbar from "../components/navbar"
 
 const Layout = ({ isHomePage, children }) => {
   const {
@@ -24,19 +24,20 @@ const Layout = ({ isHomePage, children }) => {
     <div className="global-wrapper" data-is-root-path={isHomePage}>
       <header className="global-header">
         {isHomePage ? (
-          <><img src={logo} alt="Archy in Freelancing Mode" className='logo' width='200px'/>  
-          <h1 className="main-heading" >
-            <Link to="/">{parse(title)}</Link>
-            
-          </h1>
-          <p className="tagline">Building stuff with data</p>
+          <>
+            <img
+              src={logo}
+              alt="Archy in Freelancing Mode"
+              className="logo"
+              width="200px"
+            />
+            <h1 className="main-heading">
+              <Link to="/">{parse(title)}</Link>
+            </h1>
+            <p className="tagline">Building stuff with data</p>
           </>
-          
-
         ) : (
-          <Link className="header-link-home" to="/">
-            {title}
-          </Link>
+          <Navbar title={title} />
         )}
       </header>
 

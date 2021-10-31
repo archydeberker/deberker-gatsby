@@ -17,7 +17,7 @@ const NavBar = ({ title }) => {
           }}
         >
           <Box>
-            <Link className="header-link-home" to="/">
+            <Link className="header-link-home" href="/">
               {title}
             </Link>
           </Box>

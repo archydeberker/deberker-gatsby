@@ -43,7 +43,7 @@
   --fontWeight-black: 900;
   --fontSize-root: 16px;
   --lineHeight-none: 1;
-  --lineHeight-tight: 1.1;
+  --lineHeight-tight: 0.9;
   --lineHeight-normal: 1.5;
   --lineHeight-relaxed: 1.625;
   /* 1.200 Minor Third Type Scale */
@@ -99,6 +99,7 @@ hr {
 
 /* Heading */
 
+.ez-toc-title,
 h1,
 h2,
 h3,
@@ -127,6 +128,7 @@ h1 {
   color: var(--color-heading-black);
 }
 
+.ez-toc-title,
 h2 {
   font-size: var(--fontSize-5);
 }
@@ -172,8 +174,10 @@ p {
 }
 
 ul,
+.ez-toc-list,
+.ez-toc-page-1,
 ol {
-  margin-left: var(--spacing-2);
+  margin-left: var(--spacing-0);
   margin-right: var(--spacing-0);
   padding: var(--spacing-0);
   margin-bottom: var(--spacing-8);
@@ -246,6 +250,19 @@ a:focus {
 }
 
 /* Custom classes */
+
+.ez-toc-title,
+.ez-toc-list {
+  display: none;
+  list-style-type: "";
+  font-size: var(--fontSize-0);
+  line-height: var(--lineHeight-tight);
+  font-weight: var(--fontWeight-bold);
+}
+.ez-toc-list ul {
+  list-style-type: "";
+  font-weight: var(--fontWeight-normal);
+}
 
 .stickyHeader {
   position: fixed;

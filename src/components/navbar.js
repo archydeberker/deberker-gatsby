@@ -10,10 +10,10 @@ const NavBar = ({ title }) => {
       <div style={{ position: "relative", width: "100%" }}>
         <Flex
           sx={{
+            width: "100%",
             flex: "1 1 auto",
             justifyContent: "space-between",
             alignItems: "baseline",
-            position: "relative",
           }}
         >
           <Box>

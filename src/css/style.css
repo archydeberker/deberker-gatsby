@@ -154,7 +154,10 @@ h1 > a {
   text-decoration: none;
 }
 
-h2 > a,
+a > h2 {
+  color: var(--color-heading-black);
+}
+
 h3 > a,
 h4 > a,
 h5 > a,
@@ -266,11 +269,14 @@ a:focus {
 
 .stickyHeader {
   position: fixed;
+  width: inherit;
+  max-width: inherit;
   padding: var(--spacing-5) var(--spacing-5);
   margin-bottom: var(--spacing-10);
   top: 0;
   left: 0;
   right: 0;
+
   background-color: var(--color-bg);
   z-index: 9999;
 }
@@ -283,11 +289,17 @@ a:focus {
   color: var(--color-text);
 }
 
-.navLink {
+.navLink,
+.navLinkLg {
   font-family: var(--fontFamily-sans);
   padding-left: var(--spacing-2);
 }
 
+.navLinkLg {
+  font-size: var(--fontSize-3);
+  color: var(--color-primary);
+  padding: var(--spacing-4);
+}
 .bannerImage {
   position: relative;
   display: inline-block;
@@ -295,6 +307,7 @@ a:focus {
   padding: var(--spacing-2) var(--spacing-0);
 }
 
+.stickyHeader,
 .global-wrapper {
   margin: var(--spacing-0) auto;
   max-width: var(--maxWidth-wrapper);

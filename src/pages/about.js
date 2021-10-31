@@ -11,7 +11,6 @@ const AboutPage = () => {
   return (
     <Layout isHomePage>
       <div>
-        <h2> About </h2>
         <img src={banner} className="bannerImage"></img>
         <p>
           I lead data science at

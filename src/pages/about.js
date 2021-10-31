@@ -4,8 +4,8 @@ import React from "react"
 
 import banner from "../../content/assets/banner-ice.png"
 import { jsx } from "theme-ui"
-import { Paragraph } from "theme-ui"
-import { Link, Image } from "gatsby"
+
+import { Link } from "gatsby"
 
 const AboutPage = () => {
   return (

@@ -83,7 +83,7 @@ const BlogIndex = ({
         })}
       </ol>
       <Flex columns={[2]} sx={{ justifyContent: ["space-between"] }}>
-        {previousPagePath && (
+        {previousPagePath ? (
           <Box>
             <Link className="pageButton" to={previousPagePath}>
               <FontAwesomeIcon icon={faArrowLeft} sx={{ mx: 2 }} />
@@ -91,6 +91,8 @@ const BlogIndex = ({
             </Link>
             <br />
           </Box>
+        ) : (
+          <Box></Box>
         )}
         {nextPagePath && (
           <Box>

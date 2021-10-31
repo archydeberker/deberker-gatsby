@@ -26,14 +26,11 @@ module.exports = {
       resolve: `gatsby-source-wordpress`,
       options: {
         // the only required plugin option for WordPress is the GraphQL url.
-        url:
-          process.env.WPGRAPHQL_URL ||
-          `https://deberker.com/archy/graphql`,
-          
+        url: process.env.WPGRAPHQL_URL || `https://deberker.com/archy/graphql`,
       },
       develop: {
         hardCacheMediaFiles: true,
-       },
+      },
     },
 
     /**
@@ -86,10 +83,13 @@ module.exports = {
       options: {
         fonts: [
           `limelight`,
-          `source sans pro\:300,400,400i,700` // you can also specify font weights and styles
+          `bitter`,
+          `domine`,
+          `open sans`,
+          `source sans pro\:300,400,400i,700`, // you can also specify font weights and styles
         ],
-        display: 'swap'
-      }
-    }
+        display: "swap",
+      },
+    },
   ],
 }

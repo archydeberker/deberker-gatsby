@@ -3,36 +3,35 @@ import Layout from "../components/layout"
 import React from "react"
 
 import { jsx } from "theme-ui"
-import { Card, Link, Text } from "theme-ui"
-import { Grid, Box } from "theme-ui"
-import { Button } from "theme-ui"
+import { Paragraph } from "theme-ui"
+import { Link } from "gatsby"
 
 const AboutPage = () => {
   return (
     <Layout>
-      <div sx={{ margin: 7, color: "secondary" }}>
-        <Button mr={2}>Beep</Button>
-        <Button variant="secondary">Boop</Button>
-      </div>
-      <Button ml={2} hidden>
-        Hidden
-      </Button>
-      <Grid width={[128, null, 192]}>
-        <Box bg="primary">Box</Box>
-        <Box bg="muted">Box</Box>
-        <Box bg="primary">Box</Box>
-        <Box bg="muted">Box</Box>
-      </Grid>
-      <Card
-        sx={{
-          maxWidth: 256,
-        }}
-      >
-        <Text>
-          <h1> About Me</h1>
-        </Text>
-      </Card>
-      <Link href="#!">Hello</Link>
+      <h1> About</h1>
+
+      <p>
+        I lead data science at{" "}
+        <Link href="https://www.carbonchain.io"> CarbonChain </Link>, a
+        London-based startup building carbon footprinting software for
+        carbon-intense supply chains.
+      </p>
+      <p>
+        I like to build products which use data and machine learning to deliver
+        magical experiences.
+      </p>
+
+      <p>
+        {" "}
+        I previously worked on global emissions monitoring as part of Vice
+        Presiedent Al Gore's
+        <Link>Climate TRACE </Link>project, and in applied ML research and
+        product management at
+        <Link>Element AI in Montreal </Link>. I've also done stints as a
+        consultant for interesting climate tech companies like Transition Zero,
+        Habitat, and Origami Energy.{" "}
+      </p>
     </Layout>
   )
 }

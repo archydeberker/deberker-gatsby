@@ -1,3 +1,4 @@
+/** @jsx jsx */
 import React from "react"
 import { Link, graphql } from "gatsby"
 import parse from "html-react-parser"
@@ -7,6 +8,8 @@ import Layout from "../components/layout"
 import Seo from "../components/seo"
 
 import Image from "gatsby-image"
+import { jsx } from "theme-ui"
+import { Card, Grid, Box } from "theme-ui"
 
 const BlogIndex = ({
   data,
@@ -31,7 +34,6 @@ const BlogIndex = ({
     <Layout isHomePage>
       <Seo title="All posts" />
 
-
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
           const title = post.title
@@ -42,29 +44,39 @@ const BlogIndex = ({
 
           return (
             <li key={post.uri}>
-              <article
-                className="post-list-item"
-                itemScope
-                itemType="http://schema.org/Article"
-              >
-            
-                <header>
-                {featuredImage?.fluid && (
-                    <Image
-                      fluid={featuredImage.fluid}
-                      alt={featuredImage.alt}
-                      style={{ margin: 50}}
-                    />
-          )}
-                  <h2 sx={{fontFamily: 'monospace', color: 'primary'}} >
-                    <Link to={post.uri} itemProp="url">
-                      <span itemProp="headline">{parse(title)}</span>
-                    </Link>
-                  </h2>
-                  <small>{post.date}</small>
-                </header>
-                <section itemProp="description">{parse(post.excerpt)}</section>
-              </article>
+              <Card>
+                <Link to={post.uri} itemProp="url" className="cardLink">
+                  <article
+                    className="post-list-item"
+                    itemScope
+                    itemType="http://schema.org/Article"
+                  >
+                    <Grid columns={[1, "1fr 2fr"]}>
+                      <Box>
+                        {" "}
+                        {featuredImage?.fluid && (
+                          <Image
+                            fluid={featuredImage.fluid}
+                            alt={featuredImage.alt}
+                            style={{ margin: 10 }}
+                          />
+                        )}
+                      </Box>
+                      <Box>
+                        <header>
+                          <h2>
+                            <span itemProp="headline">{parse(title)}</span>
+                          </h2>
+                          <span className="date">{post.date}</span>
+                        </header>
+                        <section itemProp="description">
+                          {parse(post.excerpt)}
+                        </section>
+                      </Box>
+                    </Grid>
+                  </article>
+                </Link>
+              </Card>
             </li>
           )
         })}

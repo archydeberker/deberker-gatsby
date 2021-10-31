@@ -234,6 +234,7 @@ table thead tr th {
 a {
   color: var(--color-primary);
   word-break: break-word;
+  text-decoration: none;
 }
 
 a:hover,
@@ -242,7 +243,13 @@ a:focus {
 }
 
 /* Custom classes */
+.date {
+  color: var(--color-text-light);
+}
 
+.cardLink {
+  color: var(--color-text);
+}
 .global-wrapper {
   margin: var(--spacing-0) auto;
   max-width: var(--maxWidth-wrapper);

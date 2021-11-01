@@ -37,9 +37,7 @@ const Bio = () => {
       {author?.firstName && (
         <p>
           For more writing, follow me on Twitter
-            <a href={`https://twitter.com/archydeb`}>
-              @ArchydeB
-            </a>
+          <a href={`https://twitter.com/archydeb`}> @ArchydeB</a>
         </p>
       )}
     </div>

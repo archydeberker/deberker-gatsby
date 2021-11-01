@@ -261,6 +261,11 @@ a:hover p {
 
 /* Custom classes */
 
+img {
+  height: auto;
+  width: 100%;
+}
+
 .ez-toc-title,
 .ez-toc-list {
   display: none;

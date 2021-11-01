@@ -259,6 +259,13 @@ a:hover p {
   color: var(--color-heading-black);
 }
 
+code {
+  max-width: 100%;
+  width: 100%;
+  display: inline-block;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
 /* Custom classes */
 
 img {

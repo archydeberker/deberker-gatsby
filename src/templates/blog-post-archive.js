@@ -70,7 +70,10 @@ const BlogIndex = ({
                           </h2>
                           <span className="date">{post.date}</span>
                         </header>
-                        <section itemProp="description">
+                        <section
+                          itemProp="description"
+                          class="blogPostDescription"
+                        >
                           {parse(post.excerpt)}
                         </section>
                       </Box>

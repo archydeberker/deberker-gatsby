@@ -255,6 +255,10 @@ a:focus {
   color: var(--color-secondary);
 }
 
+a:hover p {
+  color: var(--color-heading-black);
+}
+
 /* Custom classes */
 
 .ez-toc-title,

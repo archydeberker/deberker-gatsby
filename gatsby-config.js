@@ -15,6 +15,13 @@ module.exports = {
    */
   plugins: [
     {
+      resolve: "gatsby-plugin-fathom",
+      options: {
+        // Unique site id
+        siteId: "XVRONDCU",
+      },
+    },
+    {
       resolve: "gatsby-plugin-page-progress",
       options: {
         includePaths: [],

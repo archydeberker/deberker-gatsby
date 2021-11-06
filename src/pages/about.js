@@ -12,6 +12,8 @@ const AboutPage = () => {
     <Layout isHomePage>
       <div>
         <img src={banner} className="bannerImage"></img>
+
+        <h2> Work </h2>
         <p>
           I lead data science at
           <Link href="https://www.carbonchain.io"> CarbonChain</Link>, a
@@ -35,9 +37,35 @@ const AboutPage = () => {
           <Link href="https://www.habitat.energy">Habitat</Link>, and{" "}
           <Link href="https://www.origamienergy.com"> Origami Energy </Link>.
         </p>
+        <h2> Academic </h2>
         <p>
           I have a PhD in Neuroscience from University College London, and an
-          undergrad in Natural Sciences from Pembroke College, Cambridge.
+          undergrad in Natural Sciences from Pembroke College, Cambridge. You
+          can find my academic contributions on my{" "}
+          <a href="https://scholar.google.co.uk/citations?user=P9U_azIAAAAJ&hl=en">
+            Google Scholar profile
+          </a>
+          .
+        </p>
+        <h2>Adventures</h2>
+        <p>
+          When I'm not at a keyboard, I'm usually outside doing some combination
+          of:
+        </p>
+        <ul class="activity-list">
+          <li>🚵🏻‍♂️</li>
+          <li>⛷ </li>
+          <li>🏃‍♂️</li>
+          <li>🧗‍♀️</li>
+          <li>⛺️</li>
+          <li>🎾</li>
+          <li>🏉</li>
+        </ul>
+        <p>
+          Sometimes I write blogs about adventures: here’s one about{" "}
+          <a href="https://starchyinscandinavia.wordpress.com/">Norway</a>, and
+          another about{" "}
+          <a href="https://maraudinginmontreal.wordpress.com/">Canada</a>.
         </p>
       </div>
     </Layout>

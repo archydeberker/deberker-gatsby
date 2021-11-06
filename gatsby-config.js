@@ -15,6 +15,18 @@ module.exports = {
    */
   plugins: [
     {
+      resolve: "gatsby-plugin-page-progress",
+      options: {
+        includePaths: [],
+        excludePaths: ["/about", "/", { regex: "^/blog" }],
+        height: 3,
+        prependToBody: false,
+        color: `#ff6347`,
+        footerHeight: 100,
+        headerHeight: 0,
+      },
+    },
+    {
       /**
        * First up is the WordPress source plugin that connects Gatsby
        * to your WordPress site.

@@ -439,6 +439,13 @@ img {
   font-family: var(--fontFamily-sans);
 }
 
+.easy-footnote {
+  font-family: var(--fontFamily-sans);
+}
+
+.easy-footnote:hover {
+  color: var(--color-secondary);
+}
 /* Media queries */
 
 @media (max-width: 42rem) {

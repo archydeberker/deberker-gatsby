@@ -28,11 +28,12 @@ const Seo = ({ description, lang, meta, title, imageUrl }) => {
       }
     `
   )
-
+  
+  const defaultImageUrl = "freelance-logo-3680c19e33cb669fef35712b52fa8ab8.png"
   const metaDescription = description || wp.generalSettings?.description
   const defaultTitle = wp.generalSettings?.title
   const constructUrl = (baseUrl, path) => (!baseUrl || !path) ? null : `${baseUrl}${path}`;
-  const fullImageUrl = constructUrl("https://archy.deberker.com", imageUrl)
+  const fullImageUrl = constructUrl("https://archy.deberker.com", imageUrl?imageUrl:defaultImageUrl)
 
 
   return (

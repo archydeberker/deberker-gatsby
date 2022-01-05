@@ -3,33 +3,37 @@ import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 function SEO({ description, lang, meta, image: metaImage, title }) {
-  const { site } = useStaticQuery(
+  const { wp: site } = useStaticQuery(
     graphql`
       query {
-        site {
-          siteMetadata {
+        wp {
+          generalSettings {
             title
             description
-            author
-            keywords
-            siteUrl
           }
+        }
+
+        # if there's more than one user this would need to be filtered to the main user
+        wpUser {
+          twitter: name
         }
       }
     `
   )
-  const metaDescription = description || site.siteMetadata.description
-  const image =
-    metaImage && metaImage.src
-      ? `${site.siteMetadata.siteUrl}${metaImage.src}`
-      : null
+  // Should really be stored somewhere else
+  const siteUrl = "https://archy.deberker.com/"
+  const keywords = ["Machine Learning", "Climate Change", "Startups"]
+  const author = "Archy de Berker"
+
+  const metaDescription = description || site.generalSettings.description
+  const image = metaImage && metaImage.src ? `${siteUrl}${metaImage.src}` : null
   return (
     <Helmet
       htmlAttributes={{
         lang,
       }}
       title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      titleTemplate={`%s | ${site.generalSettings.title}`}
       meta={[
         {
           name: `description`,
@@ -37,7 +41,7 @@ function SEO({ description, lang, meta, image: metaImage, title }) {
         },
         {
           name: "keywords",
-          content: site.siteMetadata.keywords.join(","),
+          content: keywords.join(","),
         },
         {
           property: `og:title`,
@@ -53,7 +57,7 @@ function SEO({ description, lang, meta, image: metaImage, title }) {
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata.author,
+          content: author,
         },
         {
           name: `twitter:title`,

@@ -23,7 +23,9 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
 
   return (
     <Layout>
-      <Seo title={post.title} description={post.excerpt} imageUrl={featuredImage?.fluid?.src}/>
+      <Seo title={post.title} 
+      description={post.excerpt} 
+      image={featuredImage?.fluid}/>
 
       <article
         className="blog-post"

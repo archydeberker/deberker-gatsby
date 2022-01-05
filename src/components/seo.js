@@ -1,54 +1,43 @@
-/**
- * Seo component that queries for data with
- *  Gatsby's useStaticQuery React hook
- *
- * See: https://www.gatsbyjs.com/docs/use-static-query/
- */
-
 import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
-
-const Seo = ({ description, lang, meta, title, imageUrl }) => {
-  const { wp, wpUser } = useStaticQuery(
+function SEO({ description, lang, meta, image: metaImage, title }) {
+  const { site } = useStaticQuery(
     graphql`
       query {
-        wp {
-          generalSettings {
+        site {
+          siteMetadata {
             title
             description
+            author
+            keywords
+            siteUrl
           }
-        }
-
-        # if there's more than one user this would need to be filtered to the main user
-        wpUser {
-          twitter: name
         }
       }
     `
   )
-  
-  const defaultImageUrl = "freelance-logo-3680c19e33cb669fef35712b52fa8ab8.png"
-  const metaDescription = description || wp.generalSettings?.description
-  const defaultTitle = wp.generalSettings?.title
-  const constructUrl = (baseUrl, path) => (!baseUrl || !path) ? null : `${baseUrl}${path}`;
-  const fullImageUrl = constructUrl("https://archy.deberker.com", imageUrl?imageUrl:defaultImageUrl)
-
-
+  const metaDescription = description || site.siteMetadata.description
+  const image =
+    metaImage && metaImage.src
+      ? `${site.siteMetadata.siteUrl}${metaImage.src}`
+      : null
   return (
     <Helmet
       htmlAttributes={{
         lang,
       }}
       title={title}
-      titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
+      titleTemplate={`%s | ${site.siteMetadata.title}`}
       meta={[
-        { property: `og:image`, 
-        content: fullImageUrl}, 
         {
           name: `description`,
           content: metaDescription,
+        },
+        {
+          name: "keywords",
+          content: site.siteMetadata.keywords.join(","),
         },
         {
           property: `og:title`,
@@ -63,12 +52,8 @@ const Seo = ({ description, lang, meta, title, imageUrl }) => {
           content: `website`,
         },
         {
-          name: `twitter:card`,
-          content: imageUrl ? `summary_large_image` : `summary`,
-        },
-        {
           name: `twitter:creator`,
-          content: wpUser?.twitter || ``,
+          content: site.siteMetadata.author,
         },
         {
           name: `twitter:title`,
@@ -78,22 +63,52 @@ const Seo = ({ description, lang, meta, title, imageUrl }) => {
           name: `twitter:description`,
           content: metaDescription,
         },
-      ].concat(meta)}
+      ]
+        .concat(
+          metaImage
+            ? [
+                {
+                  property: "og:image",
+                  content: image,
+                },
+                {
+                  property: "og:image:width",
+                  content: metaImage.width,
+                },
+                {
+                  property: "og:image:height",
+                  content: metaImage.height,
+                },
+                {
+                  name: "twitter:card",
+                  content: "summary_large_image",
+                },
+              ]
+            : [
+                {
+                  name: "twitter:card",
+                  content: "summary",
+                },
+              ]
+        )
+        .concat(meta)}
     />
   )
 }
-
-Seo.defaultProps = {
+SEO.defaultProps = {
   lang: `en`,
   meta: [],
   description: ``,
 }
-
-Seo.propTypes = {
+SEO.propTypes = {
   description: PropTypes.string,
   lang: PropTypes.string,
   meta: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
+  image: PropTypes.shape({
+    src: PropTypes.string.isRequired,
+    height: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired,
+  }),
 }
-
-export default Seo
+export default SEO

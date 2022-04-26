@@ -21,7 +21,7 @@ function SEO({ description, lang, meta, image: metaImage, title }) {
     `
   )
   // Should really be stored somewhere else
-  const siteUrl = "https://archy.deberker.com/"
+  const siteUrl = "https://archy.deberker.com"
   const keywords = ["Machine Learning", "Climate Change", "Startups"]
   const author = "Archy de Berker"
 

@@ -18,7 +18,8 @@ const AboutPage = () => {
           I lead data science at
           <Link href="https://www.carbonchain.io"> CarbonChain</Link>, a
           London-based startup building carbon footprinting software for
-          ultra-high-emitting supply chains.
+          ultra-high-emitting supply chains. You can reach me at 
+          archy@carbonchain.io.
         </p>
         <p>
           I build products which use data and machine learning to deliver

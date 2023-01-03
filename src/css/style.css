@@ -56,12 +56,16 @@
   --fontSize-6: 2.488rem;
   --fontSize-7: 2.986rem;
   --color-primary: #007a99;
+  --color-primary-light: hsl(192, 50%, 90%);
+  --color-primary-dark: hsl(192, 50%, 20%);
   --color-text: #2e353f;
   --color-text-light: #4f5969;
   --color-heading: #1a202c;
   --color-heading-black: black;
   --color-accent: #d1dce5;
-  --color-secondary: #ff6347;
+  --color-secondary: hsl(9, 100%, 64%);
+  --color-secondary-light: hsl(9, 100%, 90%);
+  --color-secondary-dark: hsl(9, 60%, 20%);
   --color-bg: #ffff;
 }
 
@@ -280,6 +284,7 @@ code {
 img {
   height: auto;
   width: 100%;
+  
 }
 
 .ez-toc-title,
@@ -445,6 +450,13 @@ img {
 
 .easy-footnote:hover {
   color: var(--color-secondary);
+}
+
+.has-background{
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  border-radius: 10px;
+
 }
 /* Media queries */
 

@@ -16,7 +16,7 @@ const AboutPage = () => {
         <h2> Work </h2>
         <p> I'm a co-founder of <Link href="https://axle.energy/">axle energy</Link>,
           where we're building clever software to shift energy usage to low carbon, low cost times.
-          Please reach out if you're interested in working together (we're hiring engineers!) <Link href="mailto:archy@axle.energy">archy@axle.energy</Link></p>
+          Please <Link href="mailto:archy@axle.energy">reach out</Link> if you're interested in working together (we're hiring engineers!).</p>
         <p>
           I previously led data science and product at
           <Link href="https://www.carbonchain.io"> CarbonChain</Link>, a

@@ -14,11 +14,14 @@ const AboutPage = () => {
         <img src={banner} className="bannerImage"></img>
 
         <h2> Work </h2>
+        <p> I'm a co-founder of <Link href="https://axle.energy/">axle energy</Link>,
+          where we're building clever software to shift energy usage to low carbon, low cost times.
+          Please reach out if you're interested in working together (we're hiring engineers!) <Link href="mailto:archy@axle.energy">archy@axle.energy</Link></p>
         <p>
-          I lead data science at
+          I previously led data science and product at
           <Link href="https://www.carbonchain.io"> CarbonChain</Link>, a
           London-based startup building carbon footprinting software for
-          ultra-high-emitting supply chains. You can reach me at 
+          ultra-high-emitting supply chains. You can reach me at
           archy@carbonchain.io.
         </p>
         <p>

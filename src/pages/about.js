@@ -21,16 +21,11 @@ const AboutPage = () => {
           I previously led data science and product at
           <Link href="https://www.carbonchain.io"> CarbonChain</Link>, a
           London-based startup building carbon footprinting software for
-          ultra-high-emitting supply chains. You can reach me at
-          archy@carbonchain.io.
+          ultra-high-emitting supply chains.
         </p>
+
         <p>
-          I build products which use data and machine learning to deliver
-          magical experiences. I like to write code myself, and help figure out
-          what code teams should write. In my current role I do a bit of both.
-        </p>
-        <p>
-          I previously worked on global emissions monitoring as part of Vice
+          I've also worked on on global emissions monitoring as part of Vice
           President Al Gore's
           <Link href="https://www.climatetrace.org"> Climate TRACE </Link>
           project, and in applied ML research and product management at

@@ -1,0 +1,114 @@
+---
+title: "Organizing applied machine learning research"
+date: "2020-05-12T00:12:02"
+slug: "organizing-applied-machine-learning-research"
+excerpt: "Applied Machine Learning research is a bit different from standard software engineering. This post summarizes some of the things I’ve learned about leading applied ML teams."
+featuredImage: "/imported/organizing-applied-machine-learning-research/sahin-yesilyaprak-v7up-xzqx18-unsplash-1-scaled-abe4b9f1ed.jpg"
+---
+
+Over the past three years, I’ve spent >50% of my time thinking about what the applied research teams I’ve been part of should be building, and how. This post is about some of the challenges we’ve faced organizing applied machine learning research in a hyper-growth setting. 
+
+These observations are subjective and no doubt overfit to my personal experience; if you’re leading teams at Google Brain, this blogpost is probably not for you. If you’re in a startup which is pre product market fit and seems to be spending a lot of money on GPUs, listen up.
+
+### 1\. You will build useless stuff, so build it fast
+
+![](/imported/organizing-applied-machine-learning-research/photo-1517824806704-9040b037703b-c9be15f6ac.jpg)
+
+It’s tempting to build palaces of code, with turrets, fancy windows, and spiral staircases. Instead, you should try and build tents: light, simple, and easy to move once you realize you’re in completely the wrong place. Photo by [Şahin Yeşilyaprak](https://unsplash.com/@byadonia?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+
+You **will** end up building useless stuff. In a highly-uncertain startup setting you’re guaranteed to write lots of code that you’re going to need to throw away.
+
+This is ok, because it’s by writing this code that you learn which bits are useful and which bits are not. Some models won’t work; others will work, but not provide business value; others will be superseded by some amazing open source implementation a month after you’ve finished writing them. Your job is to make sure that the code you now need to throw away was written as quickly as possible.
+
+There are lots of reasons why developers and scientists are tempted into overengineering. Here’s a few:
+
+*   it’s nice to write things from scratch rather than reusing or building upon existing solutions
+*   starting a new feature gives a sense of ownership and pride that isn’t associated with marginal improvements to the status quo
+*   there’s a certain satisfaction to building heavyweight tools which bolsters your sense of professional pride and yields a sensation of solidity
+*   and the most seductive, “if we don’t build this now, we will encounter the problem later”
+
+These are all **bad** reasons. It takes a lot of self-awareness to acknowledge that you don’t understand the problem space well enough to justify building tooling. Until you really understand what you’re solving, and the painpoints have become festering sores, you shouldn’t be building ‘my distributed framework for X’ or ‘automated dispatching of Y’.
+
+This problem is exacerbated in ML, because often the loop time is long – it can take a long time to train a model. Going through the iterations needed to figure out what is useful or not can become very time consuming. This is further exacerbated if you don’t have labelled data, in which case you’re also going to have delays whilst data gets labelled. The solution to both of these is to try and stick to very simple models, trained on very small datasets. This will help you keep your loop time manageable until you’re _certain_ you’re solving a real problem.
+
+Most of the code you write in an applied research context is not about adding a feature; it’s about testing an idea. You need your code to be good enough that  you can trust the conclusions that you’re going to draw from it. If you screw up your evaluation pipeline, for instance, you’re in all kinds of trouble, because you won’t be able to tell whether the changes you’re making to the codebase are actually making things better or worse.
+
+But by and large, it’s not worth writing your machine learning code in the expectation that it will be reused. Code designed to be easily extensible is often harder to read and more prone to bugs than simpler implementations. Yes, you may find that building 6 layers of inheritance from your DeepCNN base class prevents you copying and pasting some code at some point in the future. But it’s more likely that you find out that actually you should be using an RNN, and you end up throwing away the CNN entirely. Don’t take my word for it: [Andrej Karpathy agrees.](http://karpathy.github.io/2019/04/25/recipe/)
+
+Sometimes it’s tempting to put aside your reservations and embark on building something you’re not really sure will be helpful, but somebody _else_ thinks is important. **Be very wary.** You and the team will eventually need to decide whether to maintain this feature or whether to kill it. Killing things is demoralizing, particularly when everybody involved acknowledges that it didn’t need to be built in the first place. If there’s even an inkling of doubt: You Ain’t Gonna Need it (YAGNI).
+
+## 2\. Not all learning is equal
+
+![](/imported/organizing-applied-machine-learning-research/oipwxeespy1cnwypqj1w-dufer-20collateral-20test-f63fe276ad.jpg)
+
+There are often lots of interesting and novel ways of solving problems with fascinating tools that will “only take an afternoon to learn”. But there’s also usually a more direct approach with the tools and skills you already have. Photo by [Şahin Yeşilyaprak](https://unsplash.com/@byadonia?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/toolkit?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+
+Building seemingly useful stuff is seductive, and so is learning seemingly useful stuff.
+
+Generally, the best way to learn the set of skills you need to build cool things is to go ahead and build cool things. There may be specific instances where it’s more efficient to do some tutorials than to dive straight in, but if you want your team to get really good at building and debugging deep learning models, they should be doing that. The space of things you could learn that would not help your company build great products is literally infinite. 
+
+There’s an awful lot of novelty in software and _especially_ ML, and it requires discipline to resist the FOMO associated with the release of each new pipeline tool, framework, or pretrained model library. If it solves a problem you are suffering from, then maybe it’s worth learning. But it’s worth learning because it solves a problem, not because ‘learning’ is inherently good. 
+
+I think this is the right direction to lean in, but this can lead to a bit of tunnel-vision. Correctly managed, giving the team some fraction of their time to explore problems outside of their immediate scope – Google advocates 20% – can be very impactful. But I think it’s necessary to ground that exploration in real problems, rather than random wanderings in machine-learning land.
+
+## 3\. Place lots of bets, but keep the team together
+
+![](/imported/organizing-applied-machine-learning-research/photo-1518082903679-22ec3732ff0c-0a15bbd0a1.jpg)
+
+Everybody in the team needs to be able to think independently, but you have to co-ordinate the work to keep momentum and alignment. Photo by [Şahin Yeşilyaprak](https://unsplash.com/@byadonia?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/red-arrows?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+
+The challenge of research is that it’s often really hard to predict the return on effort invested.
+
+This is what the US Marines refer to as a ’non-linearity’: a small investment in the right place at the right time can produce outlandish results. For instance, a minor change in your preprocessing pipeline might reveal a bug that causes a massive drop in performance; adding a pretrained embedding can take your optimization problem from intractable to converging; a new open-source implementation might solve your problem straight out of the box.
+
+Because you cannot know in advance which particular investment will pay off in droves, you need to be able to keep your research agenda fairly diverse. I’ve found it common for teams to double down upon too small a subset of ideas. It feels good if everybody in the team is pulling in the same direction, and communal understanding of these ideas is progressively deepening and maturing. But inevitably inertia and sunk-costs lead you to overinvest in your current agenda. It’s easy to get stuck in a local minima where you see drastically decreasing returns with increasing investment of effort.
+
+The converse is not much better: everybody working on completely disparate approaches to a problem usually leads to isolation, bugs, and completely unintelligible code. This is what you often see in academic science. Because it’s conducted by lone individuals, the research artefacts produced are often of very poor quality; without constant scrutiny from peers, it’s difficult to spot errors. Furthermore, the majority of careers in science fail, because the ideas that were being pursued didn’t work. This isn’t a dynamic you want to encourage in your teams.
+
+I think the right decision here is a function of team age. With a young team, having everybody working closely together allows the mutual oversight that junior practitioners benefit from, as well as accelerating the development of camaraderie and team unity. Conversely, as the team and the individuals within it tend towards maturity, you want to allow more divergent agendas, giving people the space to follow their hunches without necessarily justifying every single line of code to the team as a whole. You need to be able to place a lot of bets, and the best way to do that is to allow people to explore their own ideas in individuals or pairs rather than straitjacketing them with a stifling planning process.
+
+## 4\. Time spent scoping is never wasted
+
+![](/imported/organizing-applied-machine-learning-research/photo-1496950866446-3253e1470e8e-8ccce0d06e.jpg)
+
+Every project is a journey into the unknown. Study the map before you pull on your boots. Photo by [ian dooley](https://unsplash.com/@sadswim?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/mapping?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+
+When doing work with clients or other teams, you will rarely regret investing time in defining and writing down scope.
+
+I’ve been surprised at how reluctant people are to locking down written scopes for pieces of ML work. In part, it comes from the popularity of ‘Agile’ methodologies, which encourage you to build fast and iterate later. Whilst these ideas have definite value, my experience suggests that failure to scope at the start of a piece of work usually means you end up scoping it halfway through, once expectations around timelines and deliverables have already started to crystallize – and become resistant to change. This upsets the client and your team, both of whom come away with the impression that nobody really knows what’s going on. The line between ‘Agile’ and ‘poorly thought through’ is a fine one.
+
+The most useful feature of a really good technical scoping is that it highlights your assumptions. In the case of machine learning, those assumptions are often about the data. 
+
+Given the generally deplorable state of enterprise data, it’s worth pushing to make sure the inputs and outputs to the system that you’re building are completely understood by everybody – and that they match the data actually available in whatever system you’re planning to integrate into. Even small misunderstandings about what data is stored and where, or _why_ certain pieces of data get stored and others do not can lead to the specification of systems that are untrainable (because the requisite data  was never stored), un-integratable (because what they produce doesn’t match what the current system produces) or biased (because they’re trained on a weird subset of the data).
+
+If you’re not technical, you _have_ to have deeply technical ML people involved in this process. They might embarrass you by asking what a KPI or a POC stands for in front of a client, but you’ll be bloody glad when they point out that the data you’re asking them to train their models on doesn’t actually exist (yes, this happens).
+
+## 5\. Success is usually qualitative, not quantitative
+
+![](/imported/organizing-applied-machine-learning-research/photo-1507777163158-e166827ed01c-5970e9d0f9.jpg)
+
+This is the most successful product in history. It uses machine learning in lots of different ways. But you don’t buy an iPhone because Siri beats Google Assistant on some benchmarking dataset. You buy it because the experience is fantastic. Photo by [ian dooley](https://unsplash.com/@sadswim?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/numbers?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText).
+
+Machine learning scientists are overly-quantitative.
+
+Quantitative is a lovely word, associated with serious people who make lots of money and conduct their research in rigorous ways without allowing opinions or judgements to creep in.
+
+The problem is that humans – even scientists- [just aren’t really very good at interpreting numbers](http://www.cog.brown.edu/courses/cg195/pdf_files/fall05/CG195TverskyKahn1974.pdf). Furthermore, the numbers we use in machine learning often defy intuition (my loss is 0.90, anybody?). An over-reliance on numbers can often hide bugs in your code: printed predictions rarely lie, but wiggly loss curves often do (more war stories in [this post](https://towardsdatascience.com/rookie-errors-in-machine-learning-bc1c627f2789?source=search_post---------0)). 
+
+The problem is so much worse when you try to communicate how your model is performing to potential users. Those ‘opinions’ and ‘judgements’ we wanted to avoid creeping in are what people will rely upon to decide whether to buy your product. If you give them numbers they don’t understand, they will form opinions and judgements of those instead.
+
+In every setting I’ve seen, it’s better to provide a demo people can play with. No list of numbers will give them the same visceral understanding of the performance of the model. You will swiftly learn that the metrics we use to quantify model performance are a very crude guide to how satisfied a human being will be with using a system. Your abstractive summarization system might give you a better [ROUGE](https://en.wikipedia.org/wiki/ROUGE_\(metric\)) score than your extractive one, but people will be seriously weirded out when it makes stuff up that bears no resemblance to the original article. 
+
+## Closing thoughts
+
+Everything I’ve noted here, if taken to extremes, is bad advice.
+
+If your teams only write spaghetti code, your life will be full of stressful all-nighters and people quitting. If nobody ever learns anything new, you’ll become technologically obsolete. If you endlessly scope work rather than doing it, you’ll never deliver any value. If you don’t pay attention to quantitative metrics, your system won’t get better over time.
+
+Which means that doing good work in applied machine learning is a constant balancing act. Not unlike our models, we’re forced to endlessly tweak things in what feels a lot like stochastic gradient descent, and hope that we’re heading in the right direction.
+
+But if there was an analytical solution, it wouldn’t be machine learning. And it wouldn’t be nearly so much fun.
+
+* * *
+
+_Thanks to Patrick Steeves and Seb Paquet for comments on an earlier draft of this piece (they didn’t see all the controversial stuff I later added)._

@@ -1,0 +1,308 @@
+---
+title: "Predicting the performance of deep learning models"
+date: "2019-04-14T22:03:37"
+slug: "predicting-the-performance-of-deep-learning-models"
+excerpt: "It’s widely acknowledged that the recent successes of Deep Learning rest heavily upon the availability of huge amounts of data. Vision was the first domain in which the promise of DL was realised, probably because of the availability of large datasets such as ImageNet. The recent surge of simulators for RL further illustrates that as we \\[…\\]"
+tags:
+  - "machine learning"
+  - "neural networks"
+featuredImage: "/imported/predicting-the-performance-of-deep-learning-models/1024px-a-view-of-the-server-room-at-the-national-archives-e1556482059949-ca86f80b9c.jpg"
+---
+
+It’s widely acknowledged that the recent successes of Deep Learning rest heavily upon the availability of huge amounts of data. Vision was the first domain in which the promise of DL was realised, probably because of the availability of large datasets such as ImageNet. The recent surge of simulators for RL further illustrates that as we push further to apply these techniques to real-world problems, data scarcity quickly becomes the bottleneck.
+
+But how much data is enough? In commercial contexts, this question comes up a lot. When time and money is at stake, it’d be useful to be able to make some concrete statements about how improvements in model architecture are likely to weigh up against simply gathering more data. Should we pay a team of engineers for 6 months to finesse our models, or should we pay a team of crowdsourced helpers for 6 months to collate the data we need?
+
+The fact that we can’t easily answer this question reflects the immaturity of deep learning as a field, a shortcoming that led Ali Rahimi to declare ‘Machine learning has become alchemy’ in a [his 2018 NIPS talk.](https://www.youtube.com/watch?v=ORHFOnaEzPc)  Yann LeCunn’s widely publicised [Facebook post](https://www.facebook.com/yann.lecun/posts/10154938130592143) response laid down the gauntlet: ‘if you are not happy with our understanding of the methods you use everyday, fix it’.
+
+A paper from Baidu, titled [‘Deep Learning Scaling is Predictable, Empirically’](https://arxiv.org/abs/1712.00409) , goes some way to answering this challenge. As the title suggests, their answer to the question is an empirical one, not a theoretical one. The paper is accompanied by an [excellent blogpost](http://research.baidu.com/deep-learning-scaling-predictable-empirically/), which I refer you to for a more detailed discussion of the findings, which I will summarise here.
+
+Before we dive into it, a small digression: the study of scaling laws has fascinated biologists for a long time. This plot, from [Max Kleiber in 1947](https://en.wikipedia.org/wiki/Kleiber%27s_law), shows that the metabolic rate of an animal (heat produced per day) scales in a log-log fashion (more on this below) with the body weight of that animal.
+
+![](/imported/predicting-the-performance-of-deep-learning-models/kleiber1947-adace58363.jpg)
+
+In fact, it seems to scale as
+
+\[equation\]
+
+which is why the red line is steeper than the one labelled _surface_ (which is \[equation\]), but shallower than the one labelled _weight_. Fascinatingly, nobody really knows why this law holds, although it seems very robust.
+
+Back to Baidu and the world of artificial intelligence, and we are producing similar plots 70 years later:
+
+![](/imported/predicting-the-performance-of-deep-learning-models/fig2-1-a3f60037f3.png)
+
+Figure 2 of ‘Deep Learning Scaling is Predictable, Empirically’. Note that models of different structure show the same scaling coefficient.
+
+Essentially, the paper documents that increases in data produce decreases in test-set loss with a power-law relationship, which ends up as a straight line when plotted on a log-log scale (right). Fascinatingly, the exponent of this relationship – the slope of the line on the linear scale- ends up being more or less the same for any architecture you throw at the problem at hand. So the _datasets themselves_ define this exponent: the models merely shift the intercept. To hammer this home: **the effect of adding more data is essentially the same for** **_any model_****, given the dataset**. That’s pretty extraordinary.
+
+They don’t provide any code for the paper, so I threw together some experiments in PyTorch to explore their conclusions.
+
+## **Code**
+
+You can download the full Jupyter notebook [here](https://github.com/archydeberker/predictable-ml/blob/master/Predicting_CIFAR_PyTorch.ipynb) or read on for some gists.
+
+I built on the code provided in the PyTorch tutorial to produce a simple CNN to test against the CIFAR dataset (a small image classification task with 10 classes). I made it configurable with a hyperparameter dictionary because the optimal hyper parameters are very sensitive to dataset size – as we’ll see, this is important for replicating the Baidu results.
+
+```text
+class Net(nn.Module):
+  """ A simple 5 layer CNN, configurable by passing a hyperparameter dictionary at initialization.
+      Based upon the one outlined in the Pytorch intro tutorial 
+      (http://pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html#define-the-network)
+  """
+  
+    def __init__(self, hyperparam_dict=None):
+        super(Net, self).__init__()
+        
+        if not hyperparam_dict :
+            hyperparam_dict = self.standard_hyperparams()
+        
+        self.hyperparam_dict = hyperparam_dict
+        
+        self.conv1 = nn.Conv2d(3, hyperparam_dict['conv1_size'], 5)
+        self.pool = nn.MaxPool2d(2, 2)
+        self.conv2 = nn.Conv2d(hyperparam_dict['conv1_size'], hyperparam_dict['conv2_size'], 5)
+        self.fc1 = nn.Linear(hyperparam_dict['conv2_size'] * 5 * 5, hyperparam_dict['fc1_size'])
+        self.fc2 = nn.Linear(hyperparam_dict['fc1_size'], hyperparam_dict['fc2_size'])
+        self.fc3 = nn.Linear(hyperparam_dict['fc2_size'], 10)
+
+
+    def forward(self, x):
+        x = self.pool(F.relu(self.conv1(x)))
+        x = self.pool(F.relu(self.conv2(x)))
+        x = x.view(-1, self.hyperparam_dict['conv2_size'] * 5 * 5)
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = self.fc3(x)
+        
+        return x
+    
+    def standard_hyperparams(self):
+        hyperparam_dict = {}
+        
+        hyperparam_dict['conv1_size'] = 6
+        hyperparam_dict['conv2_size'] = 16
+        
+        hyperparam_dict['fc1_size'] = 120
+        hyperparam_dict['fc2_size'] = 84
+        
+        return hyperparam_dict
+```
+
+
+
+[view raw](https://gist.github.com/archydeberker/73689d4721f7d4c77e1eec7f6dc404cc/raw/0fa96a358ddaf22a56e5f4943c657c96c78204a9/SimpleCNN.py)  
+[  
+SimpleCNN.py  
+](https://gist.github.com/archydeberker/73689d4721f7d4c77e1eec7f6dc404cc#file-simplecnn-py)  
+hosted with ❤ by [GitHub](https://github.com)
+
+I split the training data into a training and a validation set, and  subsampled the training set as suggested in the paper.
+
+```text
+def get_dataset_size(start=0.5, end=100, base=2):
+    """ Returns exponentially distributed dataset size vector"""
+    dataset_size=[start]
+    while True:
+        dataset_size.append(dataset_size[-1]*base)
+        if dataset_size[-1] > end:
+            dataset_size[-1] = end
+            break
+    
+    return dataset_size
+  
+transform = transforms.Compose([transforms.ToTensor(),
+                                 transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+
+
+trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
+                                        download=True, transform=transform)
+
+
+testset = torchvision.datasets.CIFAR10(root='./data', train=False,
+                                       download=True, transform=transform)
+  
+val_size = 0.2
+
+
+num_train = len(trainset)
+indices = list(range(num_train))
+split = int(np.floor(val_size * num_train))
+np.random.shuffle(indices)
+
+
+train_idx, val_idx = indices[split:], indices[:split]
+total_train = len(train_idx)
+
+
+# For each of our train sets, we want a subset of the true train set
+dataset_size = np.array(get_dataset_size())
+dataset_size /=100 # Convert to fraction of original dataset size
+
+
+train_set_samplers = dict()
+trainset_loaders = dict()
+for ts in dataset_size:
+    train_set_samplers[ts]=np.random.choice(train_idx, int(ts*total_train))
+    trainset_loaders[ts]=torch.utils.data.DataLoader(trainset, batch_size=4,
+                                          sampler=train_set_samplers[ts], num_workers=2)
+
+
+val_sampler = SubsetRandomSampler(val_idx)
+valloader = torch.utils.data.DataLoader(trainset, batch_size=4,
+                                          sampler=val_sampler, num_workers=2)
+
+
+testloader = torch.utils.data.DataLoader(testset, batch_size=4,
+                                         shuffle=False, num_workers=2)
+```
+
+
+
+[view raw](https://gist.github.com/archydeberker/6342b6a4241c8b9b1415f33a3d8ebb91/raw/b99ac5a9262a8a36dc9bc76ac0e8b17110fba16c/CIFAR_Data_Subsampled.py)  
+[  
+CIFAR\_Data\_Subsampled.py  
+](https://gist.github.com/archydeberker/6342b6a4241c8b9b1415f33a3d8ebb91#file-cifar_data_subsampled-py)  
+hosted with ❤ by [GitHub](https://github.com)
+
+I then trained 9 models, one for each dataset size, with a stopping condition defined by increasing validation error for 3 epochs in a row (the original paper is a little vague on the specifics of validation). I then evaluated each of them against the test set.
+
+```text
+test_acc = {}
+val_acc = {}
+train_acc = {}
+test_loss = {}
+for train_size in dataset_size:
+    print('Training with subset %1.4f, which is %d images'%(train_size, train_size*total_train))
+    net = Net()
+    
+    # Train model with an early stopping criterion - terminates after 4 epochs of non-improving val loss
+    net, loss_list, val_list = train_model(net, trainset_loaders[train_size], valloader, 1000, n_epochs=10)
+    test_accuracy, loss = test_model(net, testloader)
+    
+    print('Accuracy of the network on the 10000 test images: %d %%' % (
+        100 * accuracy))
+    
+    test_acc[train_size] = accuracy
+    test_loss[train_size] = loss
+    val_acc[train_size] = val_list
+    train_acc[train_size] = loss_list
+        
+    torch.save(net, 'trainset_%1.2f_%d_images.model'%(train_size, train_size*total_train))
+```
+
+
+
+[view raw](https://gist.github.com/archydeberker/a5052560141c7ba77dc1286d7e441a83/raw/3ece740c07880350e96073690b365beffa92623e/train_CIFAR_models.py)  
+[  
+train\_CIFAR\_models.py  
+](https://gist.github.com/archydeberker/a5052560141c7ba77dc1286d7e441a83#file-train_cifar_models-py)  
+hosted with ❤ by [GitHub](https://github.com)
+
+As you would expect, the test-set accuracy increases with the increasing size of the train set. Moreover, it looks sort of power-law-ish.
+
+![](/imported/predicting-the-performance-of-deep-learning-models/experiment1-e78d94893c.png)
+
+The loss decreases, in a similar fashion.
+
+![](/imported/predicting-the-performance-of-deep-learning-models/experiment1b-c166726479.png)
+
+However, neither the log-log plots of the accuracy or the loss look as cute as the one’s in the Baidu paper. In fact, they each show some kind of vaguely logarithmic form themselves, suggesting that we have a sub-power law relationship.
+
+The reason for this is fairly obvious: I didn’t do the exhaustive hyper-parameter search that they did at each training-set size. As such, we’re not finding the best model for each dataset size. Most probably, our models are lacking the capacity to fully capture the larger datasets, and we’re therefore not making best use of the data.
+
+### **Adding hyperparameter tuning**
+
+You’ll remember that in the model definition we set the layer sizes using a hyper parameter dictionary, thus making it easy to fiddle with the shape of our network through hyper parameter tuning. As such, it’s relatively straightforward for us to implement some random search:
+
+```text
+def random_hyperparamters():
+    """ Returns randomly drawn hyperparamters for our CNN"
+    
+    hyperparam_dict = {}
+    
+    hyperparam_dict['lr'] = 10 ** np.random.uniform(-6, -1)
+    hyperparam_dict['weight_decay'] = 10 ** np.random.uniform(-6, -3)
+    hyperparam_dict['momentum'] = 10 ** np.random.uniform(-1, 0)
+    
+    hyperparam_dict['conv1_size'] = int(np.random.uniform(10,100))
+    hyperparam_dict['conv2_size'] = int(np.random.uniform(10,100))
+    hyperparam_dict['fc1_size'] = int(np.random.uniform(30,200))
+    hyperparam_dict['fc2_size'] = int(np.random.uniform(30,200))
+
+
+    return hyperparam_dict
+```
+
+
+
+[view raw](https://gist.github.com/archydeberker/380757cf933aa0a72ba85355946df225/raw/4c53ba280a07faf6fa547133fb1c0d60bfdbd0df/random_search.py)  
+[  
+random\_search.py  
+](https://gist.github.com/archydeberker/380757cf933aa0a72ba85355946df225#file-random_search-py)  
+hosted with ❤ by [GitHub](https://github.com)
+
+We can now repeat the training loop for each dataset size, sampling parameters at random:
+
+```text
+n_searches = 20
+n_epochs = 15
+n_val = 500
+
+
+for train_size in dataset_size:
+    print('Training with subset %1.4f, which is %d images'%(train_size, train_size*total_train))
+    
+    test_acc[train_size] = []
+    test_loss[train_size] = []
+    val_acc[train_size] = []
+    train_acc[train_size] = []
+    
+    # Perform random search for that dataset size
+    for trial in range(n_searches):
+        hyperparam_dict = random_hyperparamters()
+        print(hyperparam_dict)
+        
+        net = Net(hyperparam_dict)
+        
+        net, loss_list, val_list = train_model(net, trainset_loaders[train_size], valloader, n_val, n_epochs=n_epochs,
+                                              lr=hyperparam_dict['lr'], 
+                                               momentum=hyperparam_dict['momentum'], 
+                                               weight_decay=hyperparam_dict['weight_decay']
+                                              )
+
+
+        test_acc[train_size].append((hyperparam_dict, accuracy))
+        test_loss[train_size].append((hyperparam_dict, loss)) 
+        val_acc[train_size].append((hyperparam_dict, val_list)) 
+        train_acc[train_size].append((hyperparam_dict, loss_list))
+
+
+
+
+        torch.save(net, 'trainset_%d_images_trial%d_val_loss_%1.2f.model'%((train_size*total_train), trial, val_list[-1]))
+        torch.save(hyperparam_dict, 'trainset_%d_images_trial%d_val_loss_%1.2f.hparams'%((train_size*total_train), trial, val_list[-1]))
+```
+
+
+
+[view raw](https://gist.github.com/archydeberker/527cd8d5620a36a8a1ff46765be27560/raw/24acbe268c119b72f5a3cab45537cb3eed13b2b2/train_with_random_search.py)  
+[  
+train\_with\_random\_search.py  
+](https://gist.github.com/archydeberker/527cd8d5620a36a8a1ff46765be27560#file-train_with_random_search-py)  
+hosted with ❤ by [GitHub](https://github.com)
+
+And use this to train a bunch of networks for each dataset size, keeping the one that performs best on the validation set. I’m performing this tuning on MacBook without a GPU so I limited myself to 10 searches for each dataset size, hoping I could prove the point without requisitioning an AWS instance.
+
+We can then go hunting for our power laws again, and sure enough, they’re looking a lot more dapper:![](/imported/predicting-the-performance-of-deep-learning-models/experiment2a-179a8d5756.png)
+
+![](/imported/predicting-the-performance-of-deep-learning-models/experiment2b-1aafe6bffa.png)
+
+Not quite as nice as Kleiber’s, but not bad. The original paper tests a variety of models in a variety of tasks – the closest to the one performed here is ImageNet with ResNets. It’s pleasing to see that the results are so easily replicable with a different network, on a different dataset.
+
+In their discussion, the authors note:
+
+> We have yet to find factors that affect the power-law exponent. To beat the power-law as we increase data set size, models would need to learn more concepts with successively less data.
+
+This is precisely the kind of scaling that you see with humans; the more you know, the easier it is to acquire new knowledge.
+
+I wrote previously about the [difficulty of quantifying progress towards superintelligence](http://deberker.com/archy/how-intelligent-are-our-machines/). It seems that the advent of models that beat the power-law exponent – that get **more data efficient as they learn –** might be an important empirical milestone on that path.

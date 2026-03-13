@@ -1,0 +1,104 @@
+---
+title: "Running deep reinforcement learning models"
+date: "2015-07-12T12:54:10"
+slug: "running-deep-reinforcement-learning-models"
+excerpt: "Deep Mind’s Nature paper has created an understandable buzz. In it they create an algorithm than can learn to play a huge slew of Atari computer games better than a human expert. Particularly compelling are the videos, which I encourage you to check out. One delightful feature of the paper is that they provide the \\[…\\]"
+featuredImage: "/imported/running-deep-reinforcement-learning-models/alina-grubnyak-ziqkhi7417a-unsplash-0e4de3ee3a.jpg"
+---
+
+[Deep Mind’s Nature paper](http://www.nature.com/nature/journal/v518/n7540/full/nature14236.html) has created an understandable buzz. In it they create an algorithm than can learn to play a huge slew of Atari computer games better than a human expert. Particularly compelling are the [videos](http://www.nature.com/nature/journal/v518/n7540/full/nature14236.html#videos), which I encourage you to check out.
+
+One delightful feature of the paper is that they provide the code to run the models they used (henceforth referred to as Deep Q-Network, DQN). This post is about my attempts to get those models to run on my own machine, with installation instructions and notes that I found helpful.
+
+1\. You need to be running Linux to run the DQN models. I’m on a Mac, so I installed the simulator VirtualBox and then the Linux release Ubuntu, following the very clear instructions [here](http://www.engadget.com/2013/09/06/running-linux-on-your-mac-2013-edition/). The only slightly nerve-wracking bit is where you select the option ‘erase disk and install’, without a clear indication of which disk is selected. I risked it, and sure enough, it was the virtual disk and not my beloved Mac OS X.
+
+The only other thing that the tutorial omits is that after restarting your Ubuntu machine you may have an ‘unmount installation disk image’ page, through which you can proceed by pressing spacebar.
+
+At some point during this process, you’re asked how much RAM to give the new machine. **You need slightly more than 6GB to run the DQN.** Depending upon the beefiness of your machine, this may leave you with not very much (I had about 1.5 GB left), which renders you very vulnerable to crashes. Bear in mind that before running a virtual machine which consumes ~80% of your RAM, you should quit everything else on your machine and make sure you don’t have any unsaved documents lying around, as there’s a real possibility that you will run out of memory and have to restart the computer.
+
+2\. Download the models within your Linux simulator. You can do this from https://sites.google.com/a/deepmind.com/dqn/. If you download these on your host machine, and not the virtual machine, you’ll have trouble getting them across (at least I did).
+
+3\. Open the Terminal on Ubuntu. I found this a little hard to find; I ended up going to the Search icon at the top of the menu bar (which runs vertically on the left hand side of the screen in Ubuntu default) to locate it.
+
+4\. You’re probably in your home folder. Navigate to the Downloads folder by writing
+
+_cd Downloads_
+
+and hitting enter. If this doesn’t work, try writing cd /Downloads. Next type
+
+_ls_
+
+This will list the contents of the current folder. If you’ve downloaded the models, they’re in a file called Human\_Level\_Control\_through\_Deep\_Reinforcement\_Learning. If the DQN file is still a zip, write
+
+unzip Human\_ and press Tab to autocomplete the name of the file. Again, hit enter. This will unzip the archive into a folder for you.
+
+Now you should be able to navigate inside the folder, by using
+
+_cd Human\__ and again pressing tab.
+
+Now you’re in. There’s an excellent Readme.txt to take a look at, but I’ll walk you through it. The DQN requires a varieties of bits and bobs to run. Luckily the clever chaps at Google DeepMind have packaged them all together in a shell script, so all you need to do is type
+
+_./install\_dependencies.sh_ (again, you can use the Tab key to autocomplete the name of the file).
+
+Which prompts you for your password (which doesn’t appear as you type it – just write it and hit enter), before initiating one of those gloriously scrolling installation manuscript which makes you feel like you’re being tremendously productive just sitting there and watching it (whilst hoping that it doesn’t go wrong, humble in the knowledge that if it does your chances of fixing it are close to zero).
+
+I started to encounter some problems here. I got several error messages whilst running the shell, most of which seemed to pertain to a failure to connect to GitHub.
+
+_fatal: unable to connect to Github.com_
+
+Which does sound like it would get in the way of installing packages from Github. I cast around on Google for a while, before trying to login via a VPN, just in case it was a problem with my local network. That didn’t work. I then took a look at
+
+http://stackoverflow.com/questions/4891527/git-protocol-blocked-by-company-how-can-i-get-around-that
+
+And installed the tool ‘nmap’ to examine how my network was interacting with github.
+
+I then used the command
+
+_nmap github.com -Pn http,git_
+
+Which squirrelled through the network to see if it could connect to github.com. It returned the conclusion
+
+_All 1000 scanned ports on github.com are filtered_
+
+Filtered is a nice way of saying blocked. Righto.
+
+My next approach was to see whether this was a Ubuntu problem – were there some Linux firewalls set up that I didn’t understand – or fundamental to the network itself (which is odd, since I’ve used github on this network before).
+
+So I checked the firewall on Ubuntu, called UFW, with
+
+_sudo ufw status_
+
+Which returned ‘inactive’, implying that it wasn’t a problem on my own machine.
+
+So then I tried from my home network, and it still didn’t work – this time returning a slightly different error:
+
+_could not resolve host github.com_
+
+This time nmap indicated that there were ports open, so my computer should have been able to access github. A bit more googling suggested an http proxy error, and sure enough, the commmand
+
+_git config –global –unset http.proxy_
+
+Did the trick! I don’t really know enough about git to say why this was, but it’s possible that I’d set up some hocus pocus in  
+my previous attempts to use github.
+
+5\. Running the scripts
+
+In order to run the DQN, you need to give it a game to play. The games come in the form of ‘ROMS’ (like a CD-ROM), which are downloadable from https://atariage.com/system\_items.html?SystemID=2600&ItemTypeID=ROM. You can choose from a huge array of games. Having picked whichever makes you feel most nostalgic, you need to unzip it and put the resultant .bin file into the folder named roms, within the Human\_level… folder in which the DQN lurks.
+
+Righto. Make sure you note the name of the .bin file (I renamed mine from SPCINVD to space\_invaders). Now in terminal, type:
+
+_./run\_cpu \[name of file excluding .bin\]_
+
+so for me it was
+
+_./run\_cpu space\_invaders_
+
+Now at this point I received a polite but rather emphatic message telling me I needed more RAM. Hopefully you paid attention to my earlier note and set up a virtual machine with >6GB RAM, and so you won’t see this.
+
+Having rectified the RAM problems, the DQN ran, with lots of alerts about CONVNETS and the such. The output was a rather sparse:
+
+_1885 killed._
+
+Which I initially took to mean that the program had crashed, and a process identified as ‘1885’ had been ‘killed’ i.e. aborted. It subsequently dawned on me, however, that this was probably a veridicial output – the DQN was boasting of how many little aliens it had obliterated. Looking at the figures in the paper, this seems about right – a score of around 2000 is the maximum achieved with the DQN (although I’m not sure how the duration of training compares in the two cases).
+
+Next time: getting under the hood and attempting to understand what the DQN is doing…

@@ -1,0 +1,50 @@
+---
+title: "How can we build computational models of happiness?"
+date: "2014-08-16T14:01:59"
+slug: "happiness"
+excerpt: "My colleagues recently published a seminal paper examining the dynamics of happiness within a prediction-error framework (Eh? What does this mean? Read on to find out)."
+featuredImage: "/imported/happiness/kal-visuals-ak4ipnyipnu-unsplash-272a1c51ca.jpg"
+---
+
+![](/imported/happiness/76658853-76658852-904a0dc532.jpg)
+
+My colleagues Robb Rutledge, Nikolina Skandali, Peter Dayan, and Ray Dolan recently published a seminal paper examining the dynamics of happiness within a prediction-error framework (Eh? What does this mean? Read on to find out).
+
+Studying happiness is clearly fraught with difficulty; there are lots of very tricky questions to which we don’t know the answer, such as
+
+1) are there different timescales of happiness? Is momentary happiness the same as contentment, or distinct?
+
+2) is happiness a unitary concept, or is it an interpretation of a collection of bodily sensations, interpreted through the lens of what’s going on in the world? This is the ‘two-factor’ theory of emotion, which you can read about [here](http://www.holah.karoo.net/schachter.htm), based upon a fantastic experiment by Schachter & Singer in 1962.
+
+3) are there a common set of rules that determine what make people happy?
+
+4) is there a function to happiness, or is it just a side-effect of other stuff going on in the brain (what is referred to as an ‘epiphenomenon’)?
+
+Robb’s study elegantly examines the third question, whilst providing hints at the answer to the fourth. He asked whether it was possible to predict fluctuations in happiness based upon 1) the recent events experienced by an individual and 2) brain activity. To test this, he used a simple task in which you make decisions between certain monetary outcomes and gambles. He established this finding in the lab before letting it loose on smartphone users worldwide via [the Great Brain Experiment](http://www.thegreatbrainexperiment.com/), an app produced in collaboration with other neuroscientists at UCL, which allows people to play games which closely mirror the experiments we do in the lab. This gave him a powerful way to confirm that the model he used was valid in a wide variety of individuals (over 18’000), outside of a laboratory context, and even when no actual money was involved.
+
+The structure of the game is depicted below (Figure 1 from Rutledge et al.). On each trial you choose between a certain outcome (here £0) and a gamble (here between +0.65 and -0.36). If you pick the gamble, you have precisely 50/50 odds of winning or losing; here, the player wins. Every 3-4 trials, the game is interrupted to ask the player ‘How Happy Are You At This Moment?’.
+
+[![](/imported/happiness/screen-shot-2014-08-18-at-09-19-37-e4aed287a8.png)](https://i0.wp.com/deberker.com/archy/wp-content/uploads/2014/08/Screen-Shot-2014-08-18-at-09.19.37.png)
+
+He found that one could predict fluctuations in happiness as a function of recent certain rewards (CR), expected values (EV), and reward-prediction errors (RPE’s) \[the equation at the top of this page\]. Here, expected values are the average payoff you expect when you take a gamble (so if it’s 50/50 between £1 and £0, EV = 50p), and reward-prediction errors are the difference between what you get and the expected value on that trial (so if the EV was 50p and I got the £1, my reward-prediction error would be +50p).
+
+Robb found that in his best model of the data, each of these variables increased happiness. This is particularly interesting in terms of the reward prediction error term; the way RPE is calculated means that winning £0 when you might have lost £1 is identical to winning £2 when you might have won £1. This implies that happiness is scaled by your expectations, as fans of football teams well know; Manchester United’s dismal performance last season caused their followers far more suffering than an equivalent set of results would have caused fans with lower expectations (say, Newcastle United’s long suffering devotees).
+
+Another subtlety that Robb points out is that expectations are actually popping up twice here; they appear on their own, as a positive term in the equation, and as part of the reward prediction error term, where they are weighted negatively. What’s going on? Robb showed that these effects are actually separated in time. The positive expectations increase happiness _before_ you know the outcome: fans of successful football clubs gain the buzz of contemplating the potential silverware of the upcoming season, a pleasure denied to mediocre teams. However, this comes back to bite on the final day of the season, as the number of Liverpool fans left sobbing into their pints last year testifies.
+
+In each person, these effects decayed over time; things that happened recently had more effect upon happiness than things that happened some period of time ago. The speed with which this happened is represented by the parameter γ (gamma). Interestingly, events which happened more than 10 trials ago- roughly two minutes’ play- had essentially no impact upon current estimates of happiness.
+
+Robb found that not only did this equation predict happiness fluctuations, but that various components of the equation predicted activity in a part of the brain called the ventral striatum. The ventral striatum has a long history of association with emotion and cognition, with its dysfunction implicated in cognitive-emotional disorders such as [addiction](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2805560/) and [depression](http://www.ncbi.nlm.nih.gov/pubmed/17012690). It is also one of the key brain regions in which the neurotransmitter dopamine is released, and we already had some hints that it might be involved in happiness – in 2000 [a study](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2805560/) showed that dopamine release in the ventral striatum induced by amphetamines correlated with the amount of euphoria people experienced as result of taking the drug.
+
+![](/imported/happiness/fpsyg-03-00025-g002-c62cdd4331.jpg)  
+The ventral striatum (left) and the anterior insula (right) are involved in generating subjective happiness ratings.Taken from Grygolec et al., 2012, Frontiers in Psychology – http://tinyurl.com/mllbyzc
+
+So; it looks like the ventral striatum might be doing, or at least reflecting, some of the sums that contribute to changes in happiness. But what about the product – where in the brain predicts how happy people actually say they are? Robb showed a different area, called the insula, predicted how responses to the question ‘How Happy Do You Feel Right Now?’. The insula is another celebrity in the study of brain systems of emotion – it seems to be involved in the process of [interoception](http://www.ncbi.nlm.nih.gov/pubmed/19096369) (the process of thinking about how your body feels), and emotional awareness. Again, it seems to go awry in emotional disorders – the awesome Helen Mayberg recently published the exciting finding that you could predict the most effective treatment for depression by looking at insula activity in depressed individuals (you can read a nice summary [here](http://www.nimh.nih.gov/news/science-news/2013/scan-predicts-whether-therapy-or-meds-will-best-lift-depression.shtml)).
+
+What’s the point in studying happiness? Apart from the blindingly obvious importance of happiness (“Happiness is the meaning and the purpose of life, the whole aim and end of human existence.” – some guy named Aristotle), Robb’s findings may give us an insight into what happens in disorders of happiness, such as depression. A long standing tenet of basic research in science is that it’s really hard to understand how a system goes wrong if you don’t understand how it works normally. By placing happiness in a formal framework and clarifying how the brain is doing the sums which add up to happiness, Robb’s paper is an important step in the right direction.
+
+You can read the paper [here.](http://www.pnas.org/content/early/2014/07/31/1407535111.full.pdf+html)
+
+and about Robb’s thoughts on it at his website, [www.robbrutledge.com](http://www.robbrutledge.com/news/2014/8/8/a-computational-and-neural-model-of-happiness).
+
+if you’d like to download the app, you can do so and play at [The Great Brain Experiment.](http://www.thegreatbrainexperiment.com/)

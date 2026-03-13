@@ -1,0 +1,49 @@
+---
+title: "Building a Burns bot #2: Making a Slackbot"
+date: "2017-03-08T09:00:46"
+slug: "building-a-burns-bot-2-making-a-slackbot"
+excerpt: "Here we take the Markov-chain based Burn’s Bot we created in the previous post and turn it into a living, breathing Slackbot to deliver Burns on demand."
+featuredImage: "/imported/building-a-burns-bot-2-making-a-slackbot/burnsbot-044f8f4624.png"
+---
+
+_Originally published on the [ASI blog.](http://blog.asidatascience.com/building-a-slackbot/)_
+
+In the [previous post](http://deberker.com/archy/?p=367) we discussed using Markov chain models to generate pseudo-poetry. But data science is not just about writing algorithms which give you a warm feeling and make your grandma swallow her dentures with admiration. A good project culminates with productionalisation: packing your data science into a format which is convenient for the end user. Given the literary nature of this project, we thought a conversational interface would be a nice option for our Burns bot. You can find all the code you need to install your own version of the Burns bot in the github repository [here](https://github.com/berkerboy/burnsbot).
+
+**Chatwhat?**
+
+Chatbots are [growing](https://www.forbes.com/sites/rachelarthur/2016/12/15/chatbots-and-vr-lead-this-seasons-top-tech-trends-in-retail/#524713b260ea) in popularity (fast). The idea is simple: chunks of code that you interact with via a messaging app such as Facebook Messenger or Slack. Currently available bots can provide financial advice, play poker with you, and send you entertaining cat GIFS. In China the bot ecosystem is considerably more mature and diverse, with the Whatsapp equivalent, WeChat, hosting bots for everything from booking flights to paying your utility bills.
+
+Why are chatbots so attractive? For a developer, the ability to create within an existing ecosystem rather than writing interfaces from scratch saves time, whilst giving access to a large bank of potential users with very low acquisition cost. Furthermore, the result is platform agnostic; you can access it from a web browser, an iPad, or an Android phone without writing a single extra line of code. From a user’s perspective, chatbots offer a familiar mode of interaction – conversation – whilst allowing them to remain within an app they have already installed. In Europe the major bot platforms are Facebook Messenger or Slack; given that ASI’s internal communications are managed in the latter, we opted for a Slackbot.
+
+We followed [this excellent blog pos](https://www.fullstackpython.com/blog/build-first-slack-bot-python.html)t to get our bot up and running. For meaty details, head there; here I’ll sketch out the concepts and describe a couple of hurdles we encountered.
+
+**Ingredients for a bot**
+
+Bots run on a server of your choice (ours is hosted on ASI’s data science platform, SherlockML), and communicate with Slack via an API (Application Programmer Interface). Information about what’s going on within Slack is funnelled via this API into your bot, which supplies a few verification tokens to confirm that it’s a safe home for this information. [Options set within Slack](https://api.slack.com/bot-users) determine which pieces of information get sent to the bot, such that we’re not indiscriminately eavesdropping on all Slack activity. We can then write some code to specify how the bot should respond to certain events – like somebody addressing the bot – and post to slack channels, again via the API.
+
+In our case, the bot is ‘listening’ for people to address it with the command ‘write’ and a number, which trigger it to generate a poem of that many lines and pass it back into Slack. The poem is generated using the Markov model detailed in [the last post](http://blog.asidatascience.com/teaching-a-computer-to-write-poetry/): in fact, to save time, we’ve actually saved out a pre-trained version of the model in a format called JSON, and simply read it back in when we fire up the bot.
+
+**Running your bot**
+
+When you’re developing your bot, you can run it from your own computer. However, if you don’t want your bot to shut down every time you close your laptop, you’ll need to find a server which can host your bot online.
+
+We initially deployed our bot via the cloud development platform [Heroku](https://heroku.com/), which is fantastic for fast prototyping. However, their free-tier servers go to sleep if you don’t access them via the web for 30 minutes. This poses a bit of a problem for your Slackbot, because you’re never actually going to be visiting the http address that Heroku has associated with your server. This means that your bot will doze off, rather than responding with alacrity when somebody requests an infusion of Burns. To overcome this, you can use an add-on called [New Relic](https://coderwall.com/p/u0x3nw/avoid-heroku-idling-with-new-relic-pings) to regularly ping your server, which will ensure your bot remains awake and eager.
+
+We subsequently redeployed to ASI’s Data Science platform, [SherlockML](https://sherlockml.com/), which provides easy access to continuously running Amazon Web Services servers. It’s also extremely simple to scale up, so if we wanted our bot to be able to respond to millions of requests for Scottish poetry, or run a more sophisticated model, we could upgrade to a bigger server with a couple of clicks.
+
+**A recipe for a poetry-generating Slackbot**
+
+Assuming you’ve grabbed the code [from the Github repo](https://github.com/berkerboy/burnsbot), how do you end up with an all-singing, all-dancing (disclaimer: this bot is actually all-poetry and nothing else) bot? Here’s a rough guide:
+
+1.  Process your corpus (which you should stick in the mysteriously named ‘corpus’ folder) to obtain single words and train your Markov model using the function ‘train\_markovmodel’.
+2.  This will save your Markov model in an accessible format (JSON)
+3.  Go to your Slack team page and [create a new Bot user](https://api.slack.com/bot-users)
+4.  Take the SLACK\_BOT\_TOKEN from that page, save that as an environmental variable (on bash, type export SLACK\_BOT\_TOKEN=whateveryourtokenis)
+5.  Use that token and your bot name to get the BOT\_ID using the ‘print\_bot\_id’ function. Save that out as an environmental variable too.
+6.  Have a look in the main burnsbot function to get a feel for what’s happening. It’s basically listening for messages that address the bot directly, and include an instruction to write a poem of a specified number of lines.
+7.  Check that your bot works by running ‘python burnsbot.py’ from the shell and then messaging your bot in Slack
+8.  Upload your code to a server. You’ll need to re-export those environmental variables from earlier. These are called config vars if you’re on Heroku. You can run the helper function ‘getenvs’ to print the SLACK\_BOT\_TOKEN and BOT\_ID.
+9.  Run your bot code on the server: you just need to do this once, and it should run in perpetuity!
+
+One can imagine lots of interesting extensions: a similar framework could be used to provide a bot modelled on any author of your choice; snippets from your favourite coding language; song lyrics; even song notes (if you could find a way of playing them in Slack). [Fork away,](https://github.com/berkerboy/burnsbot) have fun, and let us know what you come up with.

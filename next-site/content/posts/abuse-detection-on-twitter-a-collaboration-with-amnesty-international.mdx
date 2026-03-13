@@ -1,0 +1,27 @@
+---
+title: "Abuse detection on Twitter: a collaboration with Amnesty International"
+date: "2019-01-27T18:00:11"
+slug: "abuse-detection-on-twitter-a-collaboration-with-amnesty-international"
+excerpt: "At the NeurIPS 2018 workshop on AI for Social Good we presented a piece of work we performed in collaboration with Amnesty International.  We leveraged a mixture of crowdsourcing and deep learning to study the nature and quantity of abuse suffered by prominent women on twitter. At this point quite a lot has been written about the project: if \\[…\\]"
+featuredImage: "/imported/abuse-detection-on-twitter-a-collaboration-with-amnesty-international/twitter-ipo-theverge-3-1020-1-9df355043b.jpg"
+---
+
+At the NeurIPS 2018 workshop on [AI for Social Good](https://aiforsocialgood.github.io/2018/acceptedpapers.htm) we presented a piece of work we performed in collaboration with Amnesty International.  We leveraged a mixture of crowdsourcing and deep learning to study the nature and quantity of abuse suffered by prominent women on twitter.
+
+At this point quite a lot has been written about the project: if you’re interested in the technical side you can check out [our paper](https://aiforsocialgood.github.io/2018/pdfs/track1/19-A_large_scale_crowd_sourced_analysis_of_abuse_against_women_journalists_and_politicians_on_Twitter.pdf) and the [more extended methodological note](https://decoders.azureedge.net/data-viz/images/Troll%20Patrol%20-%20Methodology.pdf); Amnesty have a [very nice interactive description](https://decoders.amnesty.org/projects/troll-patrol/findings) of the findings ; and there was an extraordinary amount of news coverage, from [Forbes](https://www.forbes.com/sites/daniblum/2018/12/18/amnesty-international-says-twitter-trolling-is-a-human-rights-abuse/#7821426f34ec) to [Wired](https://www.wired.com/story/amnesty-report-twitter-abuse-women/).
+
+![](/imported/abuse-detection-on-twitter-a-collaboration-with-amnesty-international/bert-e2f06eeab3.png)
+
+My chief contribution to the work: an abuse classifier utilising pretained BERT language models.
+
+From the NLP team, our major contribution was an abuse classifier than outperformed Google’s API when tested upon this dataset. It was based upon the [hugely influential BERT model](https://github.com/google-research/bert), and relied upon a superb open-source implementation of [BERT from HuggingFace](https://github.com/huggingface/pytorch-pretrained-BERT). This is ironic – there’s an overarching ‘anti-big-tech’ narrative to which we were arguably contributing, and yet our tooling relied upon pre-trained models from Google and a framework (Pytorch) from Facebook. This serves to underline the fact that these big companies, Twitter included, produce an enormous variety of impacts – some hugely positive, others overwhelmingly negative. Few companies are unambiguously bad (or good).
+
+One of the most interesting – and unexpected- outcomes of the work was the (albeit temporary) hit that Twitter’s stock suffered. Following the report, an apparently quite influential analyst from Citron Research [downrated the stock](https://www.cnbc.com/2018/12/20/twitter-stock-down-after-citron-research-calls-it-toxic.html),  causing a 12% plummet – something like $2.5 billion of value lost.
+
+![](/imported/abuse-detection-on-twitter-a-collaboration-with-amnesty-international/stock-0bbf7fed62.png)
+
+The report was released December 17th, followed by a precipitous decline in Twitter’s value. Note, however, the reasonably rapid re-adjustment.
+
+The violence of the market’s response to our work suggests that we hit a nerve. I think that we were probably confirming something that people already knew (Twitter is a toxic place for some women), but hadn’t had the quantitative basis to assert so forcefully.
+
+The bounce-back in the following month might hint that Twitter’s response to the report was effective, reassuring investors’ of imminent action – or simply that markets are flighty and volatile places.

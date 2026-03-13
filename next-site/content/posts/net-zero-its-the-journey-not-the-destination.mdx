@@ -1,0 +1,41 @@
+---
+title: "Net Zero is a race, not a destination"
+date: "2022-11-13T23:05:23"
+slug: "net-zero-its-the-journey-not-the-destination"
+excerpt: "The route we take to Net Zero determines how much CO2 we emit, and how much warmer we get"
+tags:
+  - "climate"
+  - "net-zero"
+featuredImage: "/imported/net-zero-its-the-journey-not-the-destination/trajectories-3c3a16b995.png"
+---
+
+Net Zero by 2050 has become a focal point for corporations and governments. Distilling climate change into a simple deadline has been helpful, and the number of companies who have signed up for realistic trajectories to get to Net Zero is cause for optimism.
+
+The reality is somewhat more complicated. Because CO2 accumulates in the atmosphere [8](#easy-footnote-bottom-8-1313), concentrations today are determined by the cumulative emissions over the last 10’000 years. When we hit Net Zero, all of the gas we’ve emitted along the way won’t simply vanish: it’s a legacy we’re going to live with for a long time. We’ve been filling up a big bathtub and it won’t empty the moment we turn off the tap.
+
+This means that it’s not only the _destination_ of Net Zero that’s important, but the journey. How many tonnes of CO2 we emit on the route to Net Zero will determine how much warmer the world becomes. Returning to the bath tub: if we run the taps at full blast until 2050 and then turn them off, we’re going to end up with a much fuller tub than if we gradually reduce the flow. The exact _date_ that we hit Net Zero is less important than the journey we take to get there.
+
+To get a more intuitive sense of this, have a play with the graph below. I’ve fixed the destination – zero emissions by 2050 – but you’ll see that the shape of that journey makes a huge difference to the temperature rises that result [9](#easy-footnote-bottom-9-1313).
+
+
+
+<iframe loading="lazy" width="600" height="600" frameborder="0" scrolling="no" src="https://plotly.com/~archy.deberker/58.embed?link=false&#038;modebar=false"></iframe>
+
+
+
+If you’re mathematically inclined: it’s the integral of annual emissions that we care about, not the rate. The area under the curve, not the value at any particular point, determines concentrations of CO2 in the atmosphere and hence global waring. As [David MacKay](https://www.withouthotair.com/) once put it: “the area under the curve is suffering”.
+
+# How should this affect our thinking about climate change?
+
+*   It emphasizes that short-term targets for countries and companies are crucial; we can’t allow them to put “getting to Net Zero” in the TODO column and sit on it for 25 years. The best standards, such as [SBTi](https://sciencebasedtargets.org/), already mandate these short term targets.
+*   Anything you can do to cut emissions, you should do right away. Considering getting solar panels? Do it now. Thinking about shifting your career into climate tech? Do it now. Wondering about joining Just Stop Oil or XR? Do it now.
+*   Working on existing technologies to make adoption _faster_ is incredibly valuable. For instance, electrification of transport seems inevitable – but anything that brings that future closer in time cuts carbon, and limits temperature rises. This means that anybody who can help make businesses more effective, produce cheaper products, or reach more customers can contribute to fighting climate change. And they should.
+
+# Code
+
+Code for making the graph, with references to the relevant IPCC sources, is open-sourced [here](https://github.com/archydeberker/methane-trajectories/blob/main/notebooks/simulate-trajectories.ipynb).
+
+#### Footnotes
+
+1.  This is true for CO2, but methane actually decomposes quickly (half-life about 10 years). This is why when estimating how bad it is relative to CO2 it’s important to specify the _timescale_ of the comparison: 20 or 100 years are the two most common[](#easy-footnote-8-1313)
+2.  I’ve made a simplifying assumption that the Transient Climate Response to Cumulative CO2 emissions (TCRE) holds for all greenhouse gases, in order to convert the y-axis here into CO2e and yield a familiar range of temperature outcomes. I don’t think this materially changes the conclusions[](#easy-footnote-9-1313)

@@ -1,0 +1,161 @@
+---
+title: "Setting up Tensorflow for Mac OS X"
+date: "2016-04-23T09:21:56"
+slug: "setting-up-tensorflow"
+excerpt: "Alternative method from the Asimov institute. This worked fine for me using an Anaconda install of Python on Mac OS X, except I had to remove the ‘–update’ flag when doing the installation with pip. Their version involves direct installation on OS X rather than installation on a virtual Linux machine via Docker, which is \\[…\\]"
+featuredImage: "/imported/setting-up-tensorflow/tensorflorplay-c5d67ff75b.png"
+---
+
+* * *
+
+[Alternative method from the Asimov institute.](http://www.asimovinstitute.org/a-quick-guide-to-installing-tensorflow-on-mac-os/) This worked fine for me using an Anaconda install of Python on Mac OS X, except I had to remove the ‘–update’ flag when doing the installation with pip. Their version involves direct installation on OS X rather than installation on a virtual Linux machine via Docker, which is what I document below.
+
+* * *
+
+_If you’re struggling to save your notebooks and retrieve them again, please see the [update](#update) at the end of this post._
+
+Google recently released a suite of Python tools for the _technique du jour_, [deep learning](http://www.techworld.com/big-data/why-does-google-need-deep-neural-network-deep-learning-3623340/), called Tensorflow. This was supplemented  by a [fantastic demo](http://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=circle&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=0&networkShape=4,2&seed=0.93127&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification) – which you can muck around with in your browser right now \[screenshot above\] – which inspired  [Zeb Kurth-Nelson](http://www.zebk.com/pubs.html)  and I to spend an evening setting up Tensorflow to work on my Mac. What follows is a brief account of our trials, tribulations, and solutions, in the hope that it is useful to anybody with a similar goal.
+
+**Some background**
+
+*   Tensorflow is a set of packages for Python. The process of setting up Tensorflow comprises of setting up an environment (see below for why this is an ‘environment’) which allows you to run Python and use these packages.
+*   Tensorflow is made to run in Linux. Using in Mac is not a huge issue, since Mac OS X is built upon Unix, which also provides the foundation of Linux.
+    *   In order to emulate Linux, you have to use an application like [Docker](https://docs.docker.com/mac/) (relevant: [useful summary](http://kaggle docker blog) of why Docker is invaluable for data scientists and those pursuing open science, from Kaggle).
+    *   Docker provides a virtual Linux machine, on your machine, for you to run Tensorflow in
+*   We started off following a rather charming tutorial titled [Tensorflow for Poets](https://www.google.co.uk/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwimrMypr6TMAhWBOhoKHS8nA6IQFggfMAA&url=https%3A%2F%2Fpetewarden.com%2F2016%2F02%2F28%2Ftensorflow-for-poets%2F&usg=AFQjCNEoUTY1BX7VwfkU8oGvg9U-0jAZww&sig2=lIvZXNmP7ILjDeRebKbTQQ), which appealed to our artistic sensibilities. However, this soon led us into a place of slithy toves, gyre and gimbling in the wabe. The mimsy borogoves caused us all sort of trouble – namely, problems with pulling the relevant Git files from TF’s Github account.
+*   What follows is a hacked together pipeline chiefly inspired by [TF’s official setup page](https://www.tensorflow.org/versions/r0.8/get_started/os_setup.html#test-the-tensorflow-installation) and sprinkled with wisdom from [Stack Overflow.](http://stackoverflow.com/questions/33636925/how-do-i-start-tensorflow-docker-jupyter-notebook)
+
+**Ok, how do I get Tensorflow working on my Mac?**
+
+(my Mac being an 2014 Air, running 10.11.4)
+
+*   Go to Docker and install an instance according to their [Getting Started](https://docs.docker.com/mac/step_one/) page
+*   Open the Docker QuickStart Terminal – easiest way to do this is using Spotlight, hitting Cmd+Spacebar, typing ‘Docker Q’ and hitting enter:[![](/imported/setting-up-tensorflow/docker-96cb9b9a90.png)](https://i0.wp.com/deberker.com/archy/wp-content/uploads/2016/04/docker.png)
+*   This opens up an instance of Terminal (Mac OS X’s command line console), but running inside your virtual machine! Pretty neat eh? By way of confirmation, you should see a delightful ASCII whale:[![](/imported/setting-up-tensorflow/docker2-41bc0c0dd2.png)](https://i0.wp.com/deberker.com/archy/wp-content/uploads/2016/04/docker2.png)
+*   To check your installation is ticketyboo, type
+
+docker run hello-world
+
+This should execute a little helper program which confirms that everything is working well. If it doesn’t work, you probably have to check out the [Docker FAQ](https://docs.docker.com/faqs/troubleshoot/)‘s.
+
+*   Next, we’re going to install Tensorflow from the web. Type
+
+docker run -it -p 8888:8888 [b.gcr.io/tensorflow/tensorflow](http://l.facebook.com/l.php?u=http%3A%2F%2Fb.gcr.io%2Ftensorflow%2Ftensorflow&h=JAQE4KsVJ)
+
+This is going to launch plenty of humming and whirring, as various packages get downloaded. Once they’ve finished, you are (unexpectedly) booted into a Jupyter notebook, with an interface that looks like this:
+
+[![](/imported/setting-up-tensorflow/jupyter-6abd8ff747.png)](https://i0.wp.com/deberker.com/archy/wp-content/uploads/2016/04/jupyter.png)
+
+What the hell is going on?
+
+Jupyter is a Python notebook interface (the name of which you will have trouble persuading Mac  OS X not to autocorrect). It allows you to run Python code from a web browser, with a nice interface that allows you to mingle runnable code with notes and outputs from that code:
+
+[![](/imported/setting-up-tensorflow/jupyter2-a83e92d8b5.png)](https://i0.wp.com/deberker.com/archy/wp-content/uploads/2016/04/jupyter2.png)
+
+**BUT you won’t actually see this nice webpage yet, because we have a problem:**
+
+Jupyter works by Python routing information to your web browser. However, your Python is running on your virtual machine (which is a Linux machine, in Docker), and your web browser is on your actual machine (running Mac OS X). We thus need to do a bit of jiggling to allow your **virtual machine to communicate with your physical machine’s web browser.** 
+
+*   The solution lies in Docker’s backend, an application called VirtualBox. Again, use Spotlight to hit Cmd + Spacebar, start typing ‘VirtualBox’, and hit Enter
+
+[![](/imported/setting-up-tensorflow/virtualbox-7d7de37785.png)](https://i0.wp.com/deberker.com/archy/wp-content/uploads/2016/04/virtualbox.png)
+
+*   In VirtualBox you get a little summary of the different virtual machines you have installed via Docker. You will have one, called ‘Default’. Right click on this and select Settings.
+
+[![](/imported/setting-up-tensorflow/vbsettings-7ca8e99dfb.png)](https://i0.wp.com/deberker.com/archy/wp-content/uploads/2016/04/vbSettings.png)
+
+*   Now select Network on the resulting Settings pane. At the bottom is a button marked ‘Port Forwarding’. Hit this.
+
+[![](/imported/setting-up-tensorflow/vbportfor-1-b7b6af7fbd.png)](https://i0.wp.com/deberker.com/archy/wp-content/uploads/2016/04/vbPortFor-1.png)
+
+*   This is the tab where we allow our virtual machine to connect to the outside world. Click the little green ‘Add a rule’ button, highlighted in the picture below, and then copy the details I’ve written in for the entry marked jupyter.
+    *   We’re telling the computer to allow connections from the virtual machines port 8888 (the guest port) to my actual machines 8888 (host port)
+
+![](/imported/setting-up-tensorflow/vb8888-2b746b2129.png)
+
+*   Hardly believing it might be this simple, go to your browser, and enter
+
+localhost:8888
+
+This sends your browser to port 8888 on your computer. And, lo and behold:
+
+[![](/imported/setting-up-tensorflow/jupy3-169e0932cc.png)](https://i0.wp.com/deberker.com/archy/wp-content/uploads/2016/04/jupy3.png)
+
+This is the interface for your Jupyter notebooks! Select one of them to get started (probably the one marked 1, hello\_tensorflow), and you’ll see a real, live, Python notebook running Tensorflow:
+
+[![](/imported/setting-up-tensorflow/jupyter2-1-a183a0d02c.png)](https://i0.wp.com/deberker.com/archy/wp-content/uploads/2016/04/jupyter2-1.png)
+
+As far as we’ve been able to figure out, this is a working instance. If you’re not familiar with Jupyter, you might want to check out their [Get Started guide](https://jupyter-notebook-beginner-guide.readthedocs.org/en/latest/).
+
+Helpful note from [Julie Lee:](https://twitter.com/synapticlee) If you **don’t** get the above notebook interface, it might be because your Jupyter notebooks aren’t being routed via port 8888. Try exiting your current Tensorflow instantiation (hit Ctrl-C twice) and running with the command
+
+docker run -it -p 8888:8888 [b.gcr.io/tensorflow/tensorflow](http://l.facebook.com/l.php?u=http%3A%2F%2Fb.gcr.io%2Ftensorflow%2Ftensorflow&h=JAQE4KsVJ)
+
+Which should force TF to use port 8888 (thanks Julie!).
+
+**UPDATE 26/5/16**:
+
+The method posted below works, but it’s a bit clunky. It turns out that you can use the Jupyter upload functionality (top right hand corner of the Jupyter notebook interface) to get files into your TF installation, and then just download notebooks for sharing  (within a notebook, go to File –> Download As). Much easier!
+
+The bit about starting TF in a named container, and then reattaching that one rather than starting a new one for each session still holds though. So the command
+
+docker run -it -d -p 8888:8888 –name NAMEOFCONTAINER  b.gcr.io/tensorflow/tensorflow
+
+Ought to do the job for the first setup, and then:
+
+docker start NAMEOFCONTAINER
+
+docker attach NAMEOFCONTAINER
+
+To re-access the container on subsequent sessions.
+
+**UPDATE 24/5/16**:
+
+One problem we’ve found with the above instantiation: **every time you start Tensorflow, you create an instance of Docker from scratch**. This means that you lose any changes you made, for instance to the tutorial scripts. The reason for this is complicated, and basically relates to how Docker works, of which I have an imperfect understanding: but it involves these things called **containers.** The steps outlined above will **create a new container every time you run it- not ideal.** Luckily, Zeb has found a workaround:
+
+1.  Create a local folder where you’d like to store files connected to Tensorflow
+2.  Run this command with NAMEOFCONTAINER and PATH\_OF\_YOUR\_FOLDER replaced by a name of your choice, and a path to the folder you created in step 1 :
+
+docker run -it -d -p 8888:8888 –name NAMEOFCONTAINER  -v PATH\_OF\_YOUR\_FOLDER:/localfiles b.gcr.io/tensorflow/tensorflow
+
+So for me, it was :
+
+docker run -it -d -p 8888:8888 –name archyTF2  -v /Users/archy/tensorflow:/localfiles b.gcr.io/tensorflow/tensorflow
+
+3\. This will do 3 things:
+
+a) It starts your instance of Tensorflow running in a named container. The next time we want to run TF, we’re just going to relaunch this container.
+
+b) It links a folder on your hard drive (the one indicated by PATH\_OF\_YOUR\_FOLDER) to a folder in the Docker installation…
+
+c) … in this case called **local files.** I think it also creates this folder (but I can’t quite remember – you might have to make it yourself using mkdir).
+
+Now: if you head to localhost:8888, you see the iPython notebook again:
+
+[![](/imported/setting-up-tensorflow/jup-5c8f4e65e2.png)](https://i0.wp.com/deberker.com/archy/wp-content/uploads/2016/04/jup.png)
+
+Now we’re going to create a new document, but it won’t be a notebook, it’ll be a terminal:
+
+[![](/imported/setting-up-tensorflow/newterminal-1f92ae9a3f.png)](https://i0.wp.com/deberker.com/archy/wp-content/uploads/2016/04/newterminal.png)Once inside, we can use a unix command (**pwd**) to figure out where precisely we are. It turns out we are in a folder called notebooks.
+
+![](/imported/setting-up-tensorflow/terminal2-5b50d2e2fa.png)
+
+Use **cd ..** to get back into the root folder, and ls to display the contents.
+
+![](/imported/setting-up-tensorflow/terminal3-a715ff2133.png)Hopefully there’ll be a folder called locafiles. If everything has gone to plan, this folder will **mirror the contents of the folder that you indicated with PATH\_OF\_YOUR\_FOLDER** above. You can see that in my case this has worked, and a folder I’ve created called test file\_isithere?.txt is indeed present.
+
+Now create a new file, using the command **touch** followed by the name of a file (here called madeinsidetensorflow.txt).
+
+![](/imported/setting-up-tensorflow/terminal4-6d46cac91e.png)
+
+Hopefully, and happily in this case, it should now be present in the local folder you’ve setup as the path:
+
+[![](/imported/setting-up-tensorflow/confirmation-856b6025c4.png)](https://i0.wp.com/deberker.com/archy/wp-content/uploads/2016/04/confirmation.png)
+
+So now we can save stuff that we do in tensor flow to local storage (i.e. into your normal file system). Note that the next time we start TF, we don’t run the whole command again- instead we do
+
+docker start NAMEOFCONTAINER
+
+docker attach NAMEOFCONTAINER
+
+And bob’s your uncle, we’ve rebooted the container we had last time, along with its nifty local file storage solution.

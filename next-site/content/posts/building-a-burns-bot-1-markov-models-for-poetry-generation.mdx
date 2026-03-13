@@ -1,0 +1,65 @@
+---
+title: "Building a Burns bot #1: Markov models for poetry generation"
+date: "2017-03-07T10:17:30"
+slug: "building-a-burns-bot-1-markov-models-for-poetry-generation"
+excerpt: "How to generate synthetic poetry with the Markov models and a wee dram of whisky,"
+featuredImage: "/imported/building-a-burns-bot-1-markov-models-for-poetry-generation/aaron-burden-y02jex-b0o0-unsplash-1-scaled-48493205c0.jpg"
+---
+
+![](/imported/building-a-burns-bot-1-markov-models-for-poetry-generation/image-357feb8b1e.jpeg)
+
+Rabbie Burns, a.k.a the Bard of Ayrshire
+
+_Originally published on the [ASI Blog](http://blog.asidatascience.com/teaching-a-computer-to-write-poetry/) ._
+
+[Robert (or Rabbie) Burns](http://www.robertburns.org/suppers/) was a Scottish poet whose corpus includes ‘An Ode to A Haggis’ and the New Year’s Eve favourite ‘Auld Lang Syne’. Each year on January 25th people throughout the UK come together to celebrate his life, for a night that typically revolves around two of Scotland’s most famous culinary exports: haggis and whisky. This year, the ASI team decided to celebrate Burn’s night in a creative manner: building a robot to produce Burns-esque poetry\*.
+
+**Producing sentences with machines**
+
+How can a machine generate meaningful text? You can think of a couple of ways to approach this problem. The first strategy is to start with a big collection of words – say all of the words that Burns ever used – and train the algorithm to pick collections of words that form plausible sentences. The second, more fine-grained option, is to generate words letter by letter. To do this, we have a collection of possible letters (A-Z), and we train the algorithm to select letters that produce real words. We do this over and over, and we end up with sentences.
+
+In both cases, the problem boils down to one of probability. We want the machine to generate words and sentences which seem _plausible_, which is another way of saying that they have _high probability_. For example, the sentence ‘I ate some haggis’ has a higher probability than the sentence ‘carpet grab bag leg’. Similarly, the combination of letters arranged as ‘the’ is very probable; the combination ‘xyo’ is not very probable.
+
+We can go one step further: in order to generate sentences that sound like they were written by Robert Burns, we train upon sentences written by Burns. The algorithm thus learns to generate sentences that have a high probability in ‘Burns language’ which [as you’ll apreciate if you’ve read any of his poems](http://www.robertburns.org/works/496.shtml), is not quite the same as normal English. In this manner, we could teach a machine to write like Burns, or Wikipedia, or Shakespeare.
+
+So how do we actually _do_ this? We need to specify a model by which the bot can learn what sentences are probable, and then produce them. Here we describe an approach using Markov chains (don’t worry, we unpack that term below); in a later blog post we will discuss how neural networks can provide a powerful alternative approach.
+
+**Markov models for sentence generation**
+
+We used a [Markov chain model](https://blog.codinghorror.com/markov-and-you/) to generate sentences in a word-by-word fashion. Despite being rather intimidatingly named, Markov models capture a simple idea: that you can work out the likely next word given the past few words. These past few words constitute a _state_. The model is trained by splitting up the training corpus into these ‘states’, and for each state noting what the likely next word is. By doing this repeatedly, we can generate sequences of plausible words.
+
+For example, let’s assume we trawl our text and find that we have the phrases ‘the man jumped’, and ‘the man cooked’. If we define our state as ‘the man’, we can quickly see that the _only possible_ words are ‘jumped’ and ‘cooked’, which are each 50% likely. Other words, like ‘banana’ and ‘woman’ are impossible (that is, p=0). Note also, that other words which might be plausible –  like ‘ran’ or ‘awoke’- are also assigned p=0, because they didn’t appear in the training material. The model doesn’t know anything apart from what it saw in the data – no knowledge of semantics, or syntax, or grammar. It’s a rather ignorant model, but it still does a surprisingly good job! If you’d like to have a go at generating your own Markov model, [you can do so here](https://de-code.github.io/markovy-online/) courtesy of Daniel Ecer.
+
+**Generating poetry with a Markov model**
+
+The process of generating sequences of words is visualised below. To start our sentence, we pick a random state – ‘the man’- from the corpus. We then perform a _random walk_ through the model. At each step, we choose from the likely next words according to their probabilities. So if a word is 90% likely to follow from a given state, we pick it 90% of the time in our random walk. Here ‘jumped’ and ‘cooked’ are equiprobable, and we end up choosing ‘cooked’. This gives us our next state -’ man cooked’- and the process begins again, up to some specified sentence length. For this state, we’ve coloured the possible choices by their probability, with more opaque corresponding to higher probability. You can see that we actually ended up selecting the second most probable option (pork), generating the new state ‘cooked pork’.
+
+![](/imported/building-a-burns-bot-1-markov-models-for-poetry-generation/groupmarkovmodel2-d6eda889fe.png)
+
+Generating sequences of words using a Markov chain model. From a random starting stage, we iteratively generate a chain of plausible words. In the above, underlining defines states, red denotes a candidate word generated by the model, and opacity corresponds to probability.
+
+We implemented this in Python using a neat open-source package called [Markovify](https://github.com/jsvine/markovify). Our corpus was provided by the impeccable [Alberto Favaro](https://www.linkedin.com/in/alberto-favaro-404055121), who scraped it from [here](http://www.scottishpoetrylibrary.org.uk/poetry/poets/robert-burns). Using a state size of 3, we found that we could produce rather nice poems:
+
+_But I look to the North; But what is a watery grave?_
+
+_Wha will crack to me my lovely maid._
+
+_Chorus.-Carle, an the King come._
+
+_What says she my dear, my native soil!_
+
+By specifying the first word of the sequence, one can also produce acrostics, spelling out words with the first letter of each word:
+
+_And here’s the flower that I loe best,_
+
+_So may no ruffian-feeling in my breast, I can feel, by its throbbings_
+
+_In vain auld age his body batters, In vain the burns cam down like waters_
+
+**Next steps**
+
+The final step was to place code into a [Slackbot](https://api.slack.com/bot-users), such that we could integrate it directly into ASI’s slack channel. With the [help of a nice guide](https://www.fullstackpython.com/blog/build-first-slack-bot-python.html) and a bit of hacking, we ended up with our very own Burns bot, providing novel poetry on-demand.
+
+Over the next couple of posts, we’ll unpack how we packaged our algorithm into a working bot (and give you the opportunity to try out the Burns bot for yourself), and discuss more sophisticated approaches to language generation using a flavour of neural network utilising a Long Short Term Memory (LSTM) units.
+
+\* Being civilised and respectful types, we also drank some whisky

@@ -1,0 +1,182 @@
+---
+title: "What does GPT-3 mean for AI?"
+date: "2020-10-13T23:15:54"
+slug: "what-does-gpt-3-mean-for-ai"
+excerpt: "The biggest AI news of 2020 was the success of OpenAI’s monstrous new language model, GPT-3. In this post I summarize why GPT-3 has caused such a splash, before highlighting some consequences for companies building things with AI."
+featuredImage: "/imported/what-does-gpt-3-mean-for-ai/susan-yin-2jivbogleho-unsplash-scaled-861da4f74e.jpg"
+---
+
+![](blob:http://deberker.com/715fae50-e1ac-4d92-8a63-96bc12f1bd01)
+
+GPT-3 is a very large machine learning model trained on large chunks of the internet. Photo by [Susan Yin](https://unsplash.com/@syinq?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/books?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+
+The biggest AI news of 2020 so far is the success of [OpenAI’s monstrous new language model, GPT-3.](https://arxiv.org/abs/2005.14165) In this post I’m going to quickly summarize why GPT-3 has caused such a splash, before highlighting 3 consequences for individuals and companies looking to build things with AI.
+
+### GPT-3: a very brief primer  
+
+Why are people excited about GPT-3? Here’s why, in 3 tweets:
+
+
+
+<blockquote class="twitter-tweet" data-width="550" data-dnt="true"><p lang="en" dir="ltr">This is mind blowing.<br /><br />With GPT-3, I built a layout generator where you just describe any layout you want, and it generates the JSX code for you.<br /><br />W H A T <a href="https://t.co/w8JkrZO4lk">pic.twitter.com/w8JkrZO4lk</a></p>&mdash; Sharif Shameem (@sharifshameem) <a href="https://twitter.com/sharifshameem/status/1282676454690451457?ref_src=twsrc%5Etfw">July 13, 2020</a></blockquote>
+
+ 
+
+<blockquote class="twitter-tweet" data-width="550" data-dnt="true"><p lang="en" dir="ltr">I made a fully functioning search engine on top of GPT3. <br /><br />For any arbitrary query, it returns the exact answer AND the corresponding URL.<br /><br />Look at the entire video. It&#39;s MIND BLOWINGLY good. <br /><br />cc: <a href="https://twitter.com/gdb?ref_src=twsrc%5Etfw">@gdb</a> <a href="https://twitter.com/npew?ref_src=twsrc%5Etfw">@npew</a> <a href="https://twitter.com/gwern?ref_src=twsrc%5Etfw">@gwern</a> <a href="https://t.co/9ismj62w6l">pic.twitter.com/9ismj62w6l</a></p>&mdash; Paras Chopra (@paraschopra) <a href="https://twitter.com/paraschopra/status/1284801028676653060?ref_src=twsrc%5Etfw">July 19, 2020</a></blockquote>
+
+ 
+
+<blockquote class="twitter-tweet" data-width="550" data-dnt="true"><p lang="en" dir="ltr">Compelling poetry from GPT3. I prompted it with &quot;Prufrock Sleeps &#8211; by T.S. Eliot&quot;. <a href="https://t.co/dW06jEOsut">pic.twitter.com/dW06jEOsut</a></p>&mdash; Owain Evans (@OwainEvans_UK) <a href="https://twitter.com/OwainEvans_UK/status/1292190171237175298?ref_src=twsrc%5Etfw">August 8, 2020</a></blockquote>
+
+
+
+##### _What’s going on here?_
+
+There are already lots of summary posts about GPT-3, so I won’t rehash them here.   
+For a great introduction to how the model works, check out [this visual guide](http://jalammar.github.io/how-gpt3-works-visualizations-animations/) from the (reliably excellent) Jay Alammar. For a sober discussion of the model’s abilities and limitations, see Kevin Lacker’s [Giving GPT-3 a Turing Test](https://lacker.io/ai/2020/07/06/giving-gpt-3-a-turing-test.html).  
+
+In short, GPT-3 is a model which is trained to autocomplete sentences. It’s been trained on huge chunks of the web. And it’s learned lots of interesting stuff along the way.  
+
+##### Why has this happened?
+
+It turns out that memorizing lots of stuff is useful if you’re trying to autocomplete sentences from the internet. For instance, if you’re trying to autocomplete sentences about Barack Obama, it’s helpful to memorize a bunch of stuff about him. How else can you autocomplete the sentence “Barack Obama was born in \_\_\_\_”?
+
+And so the model has learned a lot about Obama. And Trump. And anybody and everything which crops up regularly on the internet.  
+
+In fact, it’s not only learned facts, it’s learned to **create stuff**. You can’t create stuff by autocompleting sentences, but you can create stuff by autocompleting code. It turns out there’s lots of code on the internet, so the model has learned to write semi-coherent code. For instance, it’s learned to complete sentences which aren’t written in normal prose – it can complete sentences written in coding languages, like HTML & CSS.
+
+  
+Most interestingly, the model has learned to autocomplete code when the start of the phrase is _not_ in code. Let’s look again at that interesting layout generation tweet:
+
+
+
+<blockquote class="twitter-tweet" data-width="550" data-dnt="true"><p lang="en" dir="ltr">This is mind blowing.<br /><br />With GPT-3, I built a layout generator where you just describe any layout you want, and it generates the JSX code for you.<br /><br />W H A T <a href="https://t.co/w8JkrZO4lk">pic.twitter.com/w8JkrZO4lk</a></p>&mdash; Sharif Shameem (@sharifshameem) <a href="https://twitter.com/sharifshameem/status/1282676454690451457?ref_src=twsrc%5Etfw">July 13, 2020</a></blockquote>
+
+
+
+What’s going on under the hood here? GPT-3 is being fed with natural language descriptions (the prompts being entered into the “generate” box), and it’s autocompleting with code that roughly satisfies those descriptions. Presumably the model has learned to do this because it’s been trained on lots of tutorials, in which people write prose descriptions of what code is doing (“and next, we’re going to make a button that looks like a watermelon… &lt;code for watermelon button&gt;). 
+
+  
+These kind of demos have sent developers scrambling for API access and VC’s scrambling for their cheque books. Cue Y Combinator’s Paul Graham, one of Silicon Valley’s elder statesmen:  
+
+
+
+<blockquote class="twitter-tweet" data-width="550" data-dnt="true"><p lang="en" dir="ltr">Hackers are fascinated by GPT-3. To everyone else it seems a toy. <br /><br />Pattern seem familiar to anyone?</p>&mdash; Paul Graham (@paulg) <a href="https://twitter.com/paulg/status/1284733103391612928?ref_src=twsrc%5Etfw">July 19, 2020</a></blockquote>
+
+
+
+So what might this mean for people actually building things with AI?
+
+### 1\. From Open AI to Closed AI
+
+![](/imported/what-does-gpt-3-mean-for-ai/tim-mossholder-v5re1loi264-unsplash-2fd06b970f.jpg)
+
+Photo by [Tim Mossholder](https://unsplash.com/@timmossholder?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+
+One of the features of the current surge in AI is that the code, and often the data, is free for anybody to use. The academic model for machine learning has coalesced around free preprints on open websites like [Arxiv](https://arxiv.org/list/cs.LG/recent). Traditional peer review has been replaced by publishing your models and allowing others to tinker with them: basically now you can publish whatever you like, and if the code works, you’ll get credit for it.
+
+  
+For instance, the last big step forward in NLP was the [BERT model from Google](https://arxiv.org/abs/1810.04805). The paper was swiftly followed by code, and you can now train or use BERT models for free with excellent libraries like the [Transformers library](https://huggingface.co/transformers/) combined with free compute on [Google Colab](https://colab.research.google.com/github/tensorflow/tpu/blob/master/tools/colab/bert_finetuning_with_cloud_tpus.ipynb) notebooks.  
+
+GPT-3 is radically different in that it’s way too large for hobbyists (or most companies) to train themselves, or to even _run_. Normally in deep learning, training models is expensive but using them is relatively cheap, and you can do it on your own laptop.  
+  
+Not the case here: the model takes about 350GB of memory to run, which is ~15 x the amount of memory on my 2019 MacBook Pro. And you can completely forget about training it: [Lambda Labs estimate that it would cost $4.6 million to train using cloud GPUs.](https://lambdalabs.com/blog/demystifying-gpt-3/)
+
+  
+So how do you access GPT-3? Via an API, which means that you send bits of text across the internet and [OpenAI](http://v), the company that created GPT-3, runs the text through the model and sends you the response.   
+  
+This is a _radical_ departure from running models on your own infrastructure. It means that: 
+
+*   OpenAI make money every time you use the model
+*   OpenAI observe the different ways people are using the model
+*   OpenAI are able to gather the data you’re sending to the model
+
+Moreover, access to the API is currently restricted. This creates a power dynamic where a small number of people have access and say nice things about GPT-3 in order to retain this hotly-contested privilege. Think a hot musical festival with limited tickets and lots of publicity. A bit like [Fyre festival](https://www.youtube.com/watch?v=uZ0KNVU2fV0), maybe.
+
+###   
+2\. Few Shot learning comes of age
+
+The title of the paper in which GPT-3 was announced is “Language models are few-shot learners”. What the hell does this mean?
+
+  
+The way that machine learning works is by learning patterns. Historically, each model has been able to learn one set of patterns. For instance, we can learn a model to tell us whether a tweet is positive or negative. We do this by showing the model examples of positive and negative tweets, and essentially teaching it “tweets that look like this are positive, tweets that look like this are negative”.
+
+  
+If we want to learn a model which tells us whether a tweet is about bacon or not, that’s a different model. You can’t ask your “positive/negative” model to form an opinion on bacon. You train a new one.
+
+  
+This is a bit like somebody who can’t really play the piano memorizing the hand movements for a particular song. Maybe they can play [Chopsticks](https://www.youtube.com/watch?v=M4MMUpjcqkQ) perfectly, and there’s a bit of flexibility: they can play it louder, or faster, or more staccato. But they can’t read sheet music and play you a new song.
+
+
+
+<iframe src="https://giphy.com/embed/wkLC089tCSKs4oSXDF"></iframe>
+
+
+
+This isn’t a perfect analogy, but it’s quite a cute puppy. Credit: [Giphy](https://giphy.com/gifs/outkast-andre-3000-stankonia-ms-jackson-wkLC089tCSKs4oSXDF/media)
+
+  
+Compare this with somebody who can play the piano, for real. They have **learned how to quickly learn a new piece**. They take the music, practice it a few times, and then they can play it. 
+
+  
+This is what GPT-3 can do. It hasn’t learned just to play one piece. It’s learned how to **_learn to play new pieces quickly_**.
+
+That’s what “few shot learning” means. GPT-3 can learn to do a new task from a few examples. For example, from a few prompts it can learn to do addition, spelling correction, or translation, as visualized in the paper:
+
+![](/imported/what-does-gpt-3-mean-for-ai/image-b0c836d7f8.png)
+
+Remember, this model was originally trained just to do autocomplete.
+
+This is interesting because it cracks a massive challenge in applying AI in the real world: the cold-start problem. This describe the issue where you can’t create a compelling model until you have a bunch of training data. But you can’t really get the data until you’ve built something that people will use. It’s a Catch-22.
+
+GPT-3 might be able to solve that problem, because it’s able to do so many things out of the box. I think there’s going to be a whole playbook for starting with a GPT-3 baseline for your product, and then figuring out how to layer proprietary data and models on top of it to improve it further. Jack Clark highlighted this in [Import AI 217](https://jack-clark.net), describing the [GeDi model from Salesforce](https://arxiv.org/abs/2009.06367):
+
+> \[It\] is an example of how researchers are beginning to build plug-in tools, techniques, and augmentations, that can be attached to existing pre-trained models (e.g, GPT3) to provide more precise control over them
+> 
+> Jack Clark, [Import AI Issue 217](https://jack-clark.net/2020/10/05/import-ai-217-deepfaked-congressmen-and-deepfaked-kids-steering-gpt3-with-gedi-amazons-robots-versus-its-humans/)
+
+## 3\. Language models as databases
+
+The most valuable companies over the last several decades of enterprise technology have focused on storing and retrieving information. Most consumers are familiar with services that help you retrieve answers from the web – like Google- but they’re less familiar with the database technology that keep most of the economy ticking over.
+
+If you’ve worked with databases before, you’ll know that you have to use special languages to communicate with them. For instance, to identify the most populous city in Canada, you might write something like:
+
+```
+SELECT * FROM CITIES WHERE COUNTRY='CANADA' SORT BY POPULATION LIMIT 1
+```
+
+Which, for most of the population, is gobbledygook.
+
+But as you’ll remember from the introduction, this is the kind of stuff that GPT-3 has learned _incidentally_. So you could probably just ask GPT-3 something like:
+
+```
+"The most populous city in Canada is ____ " 
+```
+
+And it would autocomplete with **Toronto.**
+
+This is big, because it’s solving the problem of **how to get stuff out of database**s, but it’s also solved the problem of **how to get stuff into databases**, which is also a pain! In AI this is often called “knowledge graph construction”, and it’s really time consuming and difficult to automate. Google has been working on their Knowledge Graph since 2012 – it’s the thing that powers those helpful info boxes that appear above Google results – but GPT-3 appears to have replicated much of the same content in just a few months of training, with no explicit effort.  
+
+GPT-3 just bypasses the problem of “how should I structure my database and how do I get all of my data into it”. It won’t replace all of the uses of databases – you’d have to be a bit mad to get GPT-3 to store the reservations for your airline, for example- but for storing loosely structured data in a way that’s easy to retrieve, it looks like very large language models have a lot of advantages.
+
+For GPT-3 to be useful as a knowledge base, you need to be able to **update** the information easily. For instance, if the most populous city in Canada changes, we need a way to let GPT-3 know. I think this is going to be a very hot area of research; clearly you don’t want to retrain the whole model again ([remember the price tag?](https://lambdalabs.com/blog/demystifying-gpt-3/)), but it’d be nice to tweak it when the world changes.
+
+If people can convincingly solve the problem of knowledge update, then I think GPT-3 powered knowledge graphs could be incredibly helpful. Here’s a few examples:
+
+*   A customer service bot powered by GPT-3 that can answer questions about your company and products without anybody ever explicitly entering or updating that information.
+*   Natural language interrogation of scientific knowledge (“what’s the current number of COVID cases in Minnesota?”)
+*   Autocomplete systems based upon the current state of the world e.g. in a sales email you could write “we currently have X stores and yesterday we served Y customers ” and just let GPT-3 fill in whatever the relevant statistics are.
+
+## Conclusion
+
+AI has so far struggled to live up to its commercial promise. GPT-3 offers a refreshingly new approach which bypasses the data paradox which defeats so many early-stage AI projects.
+
+However, a single vendor controlling access to a model is a dramatic paradigm shift, and it’s not clear how it will play out. OpenAI has not yet participated in the [Cloud AI war](https://www.gartner.com/en/documents/3981253/magic-quadrant-for-cloud-ai-developer-services) being waged by Google, Amazon, and Microsoft, but it’d be surprising if those companies didn’t move to replicate the OpenAI GPT-3 service in some shape or form.
+
+Ultimately I think placing the model behind an API could have unexpected benefits in terms of creative applications of the technology. Arguably the field has been harmed by the [exorbitant salaries commanded by ML professionals](https://www.nytimes.com/2018/04/19/technology/artificial-intelligence-salaries-openai.html), which has inhibited the growth of early stage startups focused on building innovative things. If your early hires are so expensive the you need to spend all of your time fundraising, it’s hard to focus on building software that provide value to users. Accessing the model via an API underlines the reality: it’s not magic, it’s a tool. And it’s up to you to do something interesting with it.
+
+### Further reading
+
+*   A [critique of GPT-3](https://www.technologyreview.com/2020/08/22/1007539/gpt3-openai-language-generator-artificial-intelligence-ai-opinion/) from deep learning skeptic Gary Marcus
+*   [Experiments in creative writing with GPT-3](https://www.gwern.net/GPT-3) from Gwern
+*   The most creative use of GPT-3 I’ve seen yet: [lessons from dead people](https://twitter.com/mckaywrigley/status/1284110063498522624?s=20)

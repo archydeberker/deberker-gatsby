@@ -1,0 +1,162 @@
+---
+title: "Adding interactive Plotly graphs to WordPress"
+date: "2021-04-09T22:50:36"
+slug: "adding-interactive-plotly-graphs-to-wordpress"
+excerpt: "Tips for adding interactive Plotly graphs to Wordpress and optimizing them for mobile"
+featuredImage: "/imported/adding-interactive-plotly-graphs-to-wordpress/image-6-e1635698094359-22bf3cb7fb.png"
+---
+
+For a [recent post](https://deberker.com/archy/should-we-be-building-west-facing-solar-panels/) I wanted to embed interactive graphs in WordPress, which I’ve never tried[31](#easy-footnote-bottom-31-875).
+
+I’m a massive Plotly fan, and since the release of their [Express](https://www.google.com/search?client=safari&rls=en&q=introducing+plotly+express&ie=UTF-8&oe=UTF-8) API I’ve not used any other plotting library.
+
+However, getting Plotly graphs to render properly in WordPress turned out to be a real pain, and I also learned a bunch about formatting Plotly graphs for mobile. Here’s the summary, so I don’t forget.
+
+Table of Contents
+
+Toggle
+
+*   [Things that do not work](#Things_that_do_not_work)
+    *   [The official Plotly instructions](#The_official_Plotly_instructions)
+    *   [Pasting HTML](#Pasting_HTML)
+*   [What works](#What_works)
+    *   [Embedding Chart Studio graphs in an iframe](#Embedding_Chart_Studio_graphs_in_an_iframe)
+*   [Optimizing your charts for mobile](#Optimizing_your_charts_for_mobile)
+    *   [Make legends horizontal and put them at the top](#Make_legends_horizontal_and_put_them_at_the_top)
+    *   [Strip out the modebar and the Edit Chart link](#Strip_out_the_modebar_and_the_Edit_Chart_link)
+    *   [Split your titles onto multiple lines](#Split_your_titles_onto_multiple_lines)
+*   [Footnotes](#Footnotes)
+
+#### Things that do not work
+
+##### The official Plotly instructions
+
+[Plotly suggest](https://plotly.com/chart-studio-help/embed-graphs-in-websites/#step-10-embed-on-wordpress) you add a WordPress plugin to handle this! Hurrah, so simple.
+
+![](/imported/adding-interactive-plotly-graphs-to-wordpress/image-1-940x590-4e35c34524.png)
+
+Except… the plugin hasn’t been updated for 6 years and seems incompatible with the current version of WordPress, because following the instructions yields static graphs like this one:
+
+
+
+<a href='https://plot.ly/~chris/1638' target='_blank'><img data-recalc-dims="1" src="https://i0.wp.com/plot.ly/~chris/1638.png?w=660&#038;ssl=1" onerror='this.onerror=null;this.src="https://plot.ly/404.png"' /></a><script data-plotly='chris:1638' src='https://plot.ly/embed.js' async></script>
+
+
+
+To be clear, I don’t blame Plotly for graveyarding this: they’ve got better things to do than catering to the very weird intersection of people technical enough to want to embed interactive graphs in blogposts and lazy enough to still be on WordPress.
+
+##### Pasting HTML
+
+Plotly graphs are pure JS/HTML, and so you can export the whole shebang as an HTML document and it’ll run just fine in the browser with no other dependencies.
+
+WordPress has a `Custom HTML` block, so I tried just copying and pasting in the resulting file:
+
+```
+fig = px.line(df, x='Time', y='Price')
+fig.to_html('copy_and_paste_the_contents.html')
+```
+
+This causes WordPress to slow down, stop saving, and eventually crash. There’s clearly an issue with embedding large quantities of JSON this way. I lost quite a bit of work because this broke WordPress’s autosave.
+
+I’m not going to include an example here because the same thing will probably happen 😬.
+
+#### What works
+
+##### Embedding Chart Studio graphs in an iframe
+
+Of the myriad ways to export your Plotly charts, one of the most powerful is the export to their online [Chart Studio](https://chart-studio.plotly.com).
+
+It’s pretty easy to setup, requiring a few lines of Python to authenticate, as described [here](https://plotly.com/python/getting-started-with-chart-studio/).
+
+You can then push your beautiful charts to the web:
+
+```
+import chart_studio.plotly as py
+
+fig = px.line(df, x='Time', y='Price')
+py.plot(data, filename = 'basic-line', auto_open=True)
+```
+
+Once they’re there, you can hit the `</>` symbol in the bottom right to open up an Embed panel, which contains a reformatted `iframe`:
+
+![](/imported/adding-interactive-plotly-graphs-to-wordpress/image-2-940x785-400d335892.png)
+
+And if you copy and paste _this_ into a Custom HTML block, everything is groovy:
+
+
+
+<iframe loading="lazy" width="900" height="400" frameborder="0" scrolling="no" src="https://plotly.com/~chris/1638.embed"></iframe>
+
+
+
+It doesn’t break WordPress because the iframe is just a portal to the JSON elsewhere, so WordPress doesn’t have to try and save it.
+
+This actually has further benefits, because it means you can effortlessly update your graphs from your Jupyter notebook and have them updated on your blog without doing anything!
+
+```
+fig = px.line(df, x='Time', y='Price')
+py.plot(data, filename = 'basic-plot', auto_open=True)
+
+# Actually I prefer an area plot 
+fig = px.area(df, x='Time', y='Price')
+
+# Because this has the same filename, it will overwrite the last one,
+# and your iframe will now render an area plot!
+py.plot(data, filename = 'basic-line', auto_open=True)
+```
+
+This is a huge bonus if you’re fiddling with your graphs a lot.
+
+One downside is that you’re dependent upon an external service to render your graphs, and if for some reason Plotly goes down, so will your charts. I’ve not found this to be an issue so far, and I trust them more than I trust my WordPress on Bluehost setup.
+
+#### Optimizing your charts for mobile
+
+I wanted my lovingly crafted graphs to render well on mobile. Iframe embeds are not particularly responsive, so here are a couple of tricks worth bearing in mind.
+
+##### Make legends horizontal and put them at the top
+
+Vertical legends take up valuable horizontal space, squeezing your graph.
+
+![](/imported/adding-interactive-plotly-graphs-to-wordpress/image-4-be69254bb8.png)
+
+```
+fig.update_layout(legend=dict(orientation='h', title=None, y=1.))
+```
+
+![](/imported/adding-interactive-plotly-graphs-to-wordpress/image-3-2c5cc40712.png)
+
+##### Strip out the modebar and the Edit Chart link
+
+The toolbar (top) and edit chart link (bottom) add visual noise and crowding.
+
+![](/imported/adding-interactive-plotly-graphs-to-wordpress/image-3-2c5cc40712.png)
+
+You can modify the embed code by [appending query parameters](https://plotly.com/chart-studio-help/embed-graphs-in-websites/#step-8-customize-the-iframe) to your iframe `src`:
+
+```
+<iframe width="900" height="400" frameborder="0" scrolling="no" src="//plotly.com/~archy.deberker/31.embed?link=false&modebar=false"></iframe>
+```
+
+![](/imported/adding-interactive-plotly-graphs-to-wordpress/image-5-15ec34610d.png)
+
+This makes things a lot cleaner.
+
+##### Split your titles onto multiple lines
+
+Plotly won’t wrap your titles, so you’ll end up with stuff offscreen:
+
+![](/imported/adding-interactive-plotly-graphs-to-wordpress/image-6-fb288a4c0d.png)
+
+So you’ll want to add some `<br>` to your titles:
+
+```
+fig = px.line(daily, x=daily.index, y=['South earnings', 'West earnings'], title='It does not look good<br>for Western panels')
+```
+
+![](/imported/adding-interactive-plotly-graphs-to-wordpress/image-5-15ec34610d.png)
+
+[Let me know](https://twitter.com/ArchydeB) if this was useful!
+
+#### Footnotes
+
+1.  I know, I know, I should be using a statically rendered blog in Gatsby or Next.js, but I’ve got a bunch of old content here that I’m loathe to migrate[](#easy-footnote-31-875)

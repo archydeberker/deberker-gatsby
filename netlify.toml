@@ -1,6 +1,5 @@
 [build]
   base = "next-site"
-  command = "npm run build"
 
 [build.environment]
   NODE_VERSION = "22"

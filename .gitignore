@@ -60,6 +60,10 @@ typings/
 .cache/
 public
 
+# next build outputs
+next-site/.next/
+next-site/out/
+
 # Mac files
 .DS_Store
 

@@ -6,6 +6,7 @@ const withMDX = createMDX({
 });
 
 const nextConfig = {
+  output: 'export',
   pageExtensions: ['ts', 'tsx', 'md', 'mdx'],
   outputFileTracingRoot: path.join(process.cwd(), '..'),
   images: {

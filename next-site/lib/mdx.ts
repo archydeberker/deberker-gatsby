@@ -24,6 +24,8 @@ export interface Post {
   content: string;
 }
 
+export const POSTS_PER_PAGE = 6;
+
 const TOPIC_STOPWORDS = new Set([
   'a',
   'about',
@@ -204,6 +206,16 @@ export async function getAllPosts(): Promise<Post[]> {
       (a, b) =>
         new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime(),
     );
+}
+
+export function getTotalPages(postCount: number, postsPerPage = POSTS_PER_PAGE): number {
+  return Math.max(1, Math.ceil(postCount / postsPerPage));
+}
+
+export function getPostsForPage(posts: Post[], page: number, postsPerPage = POSTS_PER_PAGE): Post[] {
+  const currentPage = Math.max(1, page);
+  const startIndex = (currentPage - 1) * postsPerPage;
+  return posts.slice(startIndex, startIndex + postsPerPage);
 }
 
 export async function renderPostMdx(source: string) {

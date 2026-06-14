@@ -56,13 +56,18 @@ typings/
 # dotenv environment variable files
 .env*
 
-# gatsby files
+# gatsby files (legacy root build output only)
 .cache/
-public
+/public
 
 # next build outputs
 next-site/.next/
 next-site/out/
+
+# next-site build-generated artifacts (source assets in next-site/public ARE tracked)
+next-site/public/_redirects
+next-site/public/rss.xml
+next-site/public/sitemap.xml
 
 # Mac files
 .DS_Store

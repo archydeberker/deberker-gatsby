@@ -9,48 +9,30 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      animation: {
-        'shell-gradient': 'shell-gradient 24s ease-in-out infinite',
-      },
-      backgroundImage: {
-        'shell-gradient':
-          'linear-gradient(305deg, hsl(8 100% 64%) 0%, hsl(28 98% 61%) 20%, hsl(29 63% 68%) 44%, hsl(220 69% 67%) 69%, hsl(203 100% 43%) 87%, hsl(192 100% 30%) 100%)',
-      },
       colors: {
-        primary: '#007a99',
-        coral: '#ff6147',
-        text: '#2e353f',
-        'text-muted': '#4f5969',
-        heading: '#1a202c',
-        accent: '#d1dce5',
+        // Swiss-minimal redesign tokens (mirror app/redesign.css :root)
+        paper: '#FAFCFC',
+        ink: '#12181C',
+        'ink-soft': '#313B3F',
+        muted: '#656F72',
+        faint: '#9CA6A9',
+        faintest: '#C2CBCD',
+        line: '#E2E8E8',
+        'line-strong': '#CDD6D6',
+        surface: '#F0F4F4',
+        'surface-2': '#E9EEEE',
+        accent: '#FF5A4D',
+        // kept aliases for any incidental references
+        coral: '#FF5A4D',
+        text: '#313B3F',
+        'text-muted': '#656F72',
+        heading: '#12181C',
+        primary: '#FF5A4D',
       },
       fontFamily: {
-        sans: ['var(--font-source-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        serif: ['var(--font-domine)', 'ui-serif', 'Georgia', 'serif'],
-      },
-      keyframes: {
-        'shell-gradient': {
-          '0%': {
-            backgroundPosition: '12% 38%',
-            transform: 'translate3d(-4%, -3%, 0) scale(1.08) rotate(0deg)',
-          },
-          '25%': {
-            backgroundPosition: '76% 18%',
-            transform: 'translate3d(3%, -4%, 0) scale(1.14) rotate(3deg)',
-          },
-          '50%': {
-            backgroundPosition: '92% 84%',
-            transform: 'translate3d(5%, 2%, 0) scale(1.12) rotate(0deg)',
-          },
-          '75%': {
-            backgroundPosition: '24% 96%',
-            transform: 'translate3d(-3%, 4%, 0) scale(1.15) rotate(-3deg)',
-          },
-          '100%': {
-            backgroundPosition: '12% 38%',
-            transform: 'translate3d(-4%, -3%, 0) scale(1.08) rotate(0deg)',
-          },
-        },
+        sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-serif)', 'ui-serif', 'Georgia', 'serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
     },
   },

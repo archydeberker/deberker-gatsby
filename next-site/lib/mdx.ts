@@ -9,6 +9,41 @@ import { mdxComponents } from '@/components/mdx-components';
 
 const POSTS_DIR = path.join(process.cwd(), 'content/posts');
 
+// WordPress imports flattened "<figure><img><figcaption>" into a standalone
+// image followed by a caption paragraph. Tag the caption paragraphs (those that
+// start with a clear caption marker) so they render small/muted instead of as
+// full-size body text. Marker-based so we never shrink real body paragraphs.
+const CAPTION_RE = /^\s* ?\s*(source|credit|photo|image credit|fig\.|figure|©)\b/i;
+
+function rehypeCaptions() {
+  function textOf(node: { type?: string; value?: string; children?: unknown[] }): string {
+    if (node.type === 'text') return node.value ?? '';
+    if (Array.isArray(node.children)) {
+      return node.children.map((c) => textOf(c as typeof node)).join('');
+    }
+    return '';
+  }
+  type HastNode = {
+    type?: string;
+    tagName?: string;
+    properties?: { className?: unknown };
+    children?: HastNode[];
+  };
+  function walk(node: HastNode) {
+    if (!Array.isArray(node.children)) return;
+    for (const child of node.children) {
+      if (child.type === 'element' && child.tagName === 'p' && CAPTION_RE.test(textOf(child))) {
+        child.properties = child.properties ?? {};
+        const existing = child.properties.className;
+        const classes = Array.isArray(existing) ? existing : existing ? [existing] : [];
+        child.properties.className = [...classes, 'caption'];
+      }
+      walk(child);
+    }
+  }
+  return (tree: HastNode) => walk(tree);
+}
+
 export interface PostFrontmatter {
   title: string;
   date: string;
@@ -226,7 +261,7 @@ export async function renderPostMdx(source: string) {
       parseFrontmatter: false,
       mdxOptions: {
         remarkPlugins: [remarkGfm],
-        rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: 'append' }]],
+        rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: 'append' }], rehypeCaptions],
       },
     },
   });
@@ -325,4 +360,29 @@ export function formatDate(value: string): string {
     month: 'long',
     day: 'numeric',
   }).format(new Date(value));
+}
+
+export function formatDateLong(value: string): string {
+  return new Intl.DateTimeFormat('en-GB', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(new Date(value));
+}
+
+export function formatMonthYear(value: string): string {
+  return new Intl.DateTimeFormat('en-GB', {
+    year: 'numeric',
+    month: 'short',
+  }).format(new Date(value));
+}
+
+export function readingTime(content: string): number {
+  const words = content
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/[#>*_`~\-|]/g, ' ')
+    .split(/\s+/)
+    .filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
 }

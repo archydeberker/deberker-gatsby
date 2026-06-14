@@ -1,19 +1,27 @@
 import type { Metadata } from 'next';
-import { Domine, Source_Sans_3 } from 'next/font/google';
+import { Hanken_Grotesk, JetBrains_Mono, Newsreader } from 'next/font/google';
 import SiteShell from '@/components/site-shell';
 import { rssPath, siteDescription, siteName, siteUrl } from '@/lib/site';
 import './tailwind.css';
+import './redesign.css';
 
-const sourceSans = Source_Sans_3({
+const hanken = Hanken_Grotesk({
   subsets: ['latin'],
-  variable: '--font-source-sans',
-  weight: ['400', '600', '700', '800'],
+  variable: '--font-sans',
+  weight: ['400', '500', '600', '700'],
 });
 
-const domine = Domine({
+const newsreader = Newsreader({
   subsets: ['latin'],
-  variable: '--font-domine',
-  weight: ['400', '700'],
+  variable: '--font-serif',
+  style: ['normal', 'italic'],
+  weight: ['400', '500'],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  weight: ['400', '500', '700'],
 });
 
 export const metadata: Metadata = {
@@ -44,8 +52,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${sourceSans.variable} ${domine.variable} font-serif antialiased`}>
+    <html
+      lang="en"
+      className={`${hanken.variable} ${newsreader.variable} ${jetbrainsMono.variable}`}
+    >
+      <body className="font-sans antialiased">
         <SiteShell>{children}</SiteShell>
       </body>
     </html>

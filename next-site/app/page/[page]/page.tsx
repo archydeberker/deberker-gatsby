@@ -32,7 +32,12 @@ export default async function HomeArchivePage({ params }: HomeArchivePageProps) 
 
   return (
     <div>
-      <PostList posts={paginatedPosts} basePath="/blog" />
+      <PostList
+        posts={paginatedPosts}
+        basePath="/blog"
+        startNumber={(currentPage - 1) * POSTS_PER_PAGE + 1}
+        showHead={false}
+      />
       <PaginationNav previousHref={previousHref} nextHref={nextHref} />
     </div>
   );

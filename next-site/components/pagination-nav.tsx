@@ -6,21 +6,17 @@ interface PaginationNavProps {
 }
 
 export default function PaginationNav({ previousHref, nextHref }: PaginationNavProps) {
+  if (!previousHref && !nextHref) {
+    return null;
+  }
+
   return (
-    <nav className="my-4 flex items-center justify-between">
+    <nav className="A-pager">
       <div>
-        {previousHref ? (
-          <Link className="font-sans text-[0.95rem] text-primary no-underline transition-colors hover:text-coral" href={previousHref}>
-            ← Previous page
-          </Link>
-        ) : null}
+        {previousHref ? <Link href={previousHref}>← Newer</Link> : null}
       </div>
       <div>
-        {nextHref ? (
-          <Link className="font-sans text-[0.95rem] text-primary no-underline transition-colors hover:text-coral" href={nextHref}>
-            Next page →
-          </Link>
-        ) : null}
+        {nextHref ? <Link href={nextHref}>Older →</Link> : null}
       </div>
     </nav>
   );

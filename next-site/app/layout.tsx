@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import { JetBrains_Mono, Newsreader, Schibsted_Grotesk } from 'next/font/google';
+import { Hanken_Grotesk, JetBrains_Mono, Newsreader } from 'next/font/google';
 import SiteShell from '@/components/site-shell';
 import { rssPath, siteDescription, siteName, siteUrl } from '@/lib/site';
 import './tailwind.css';
 import './redesign.css';
 
-const schibsted = Schibsted_Grotesk({
+const hanken = Hanken_Grotesk({
   subsets: ['latin'],
   variable: '--font-sans',
   weight: ['400', '500', '600', '700'],
@@ -54,7 +54,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${schibsted.variable} ${newsreader.variable} ${jetbrainsMono.variable}`}
+      className={`${hanken.variable} ${newsreader.variable} ${jetbrainsMono.variable}`}
     >
       <body className="font-sans antialiased">
         <SiteShell>{children}</SiteShell>

@@ -291,12 +291,24 @@ body {
 .R-body li { margin: 0 0 10px; padding-left: 0.3em; }
 .R-body li::marker { color: var(--faint); }
 .R-body blockquote {
-  margin: 40px 0; padding: 4px 0 4px 28px; border-left: 2px solid var(--accent);
-  font-family: var(--sans); font-size: 24px; line-height: 1.3;
-  font-weight: 500; letter-spacing: -0.022em; color: var(--ink); text-wrap: balance;
+  margin: 28px 0; padding: 2px 0 2px 22px; border-left: 2px solid var(--accent-line);
+  font-family: var(--serif); font-size: 18px; line-height: 1.55;
+  font-style: italic; font-weight: 400; letter-spacing: 0; color: var(--ink-soft); text-wrap: pretty;
 }
 .R-body blockquote p { font-family: inherit; font-size: inherit; color: inherit; margin: 0 0 12px; }
 .R-body blockquote p:last-child { margin-bottom: 0; }
+/* callout / aside — muted neutral box */
+.R-body aside {
+  margin: 32px 0; padding: 20px 26px;
+  background: var(--surface);
+}
+.R-body aside p {
+  font-family: var(--serif); font-size: 17px; line-height: 1.6;
+  color: var(--ink-soft); margin: 0 0 12px;
+}
+.R-body aside p:last-child { margin-bottom: 0; }
+.R-body aside ul, .R-body aside ol { font-size: 17px; margin: 0 0 12px; }
+.R-body aside p:first-child { margin-top: 0; }
 .R-body img { width: 100%; height: auto; display: block; margin: 32px 0; border: 1px solid var(--line); border-radius: 3px; }
 /* tighten the gap below a standalone image so its caption sits with it */
 .R-body p:has(> img), .R-body p:has(> a > img) { margin-bottom: 0; }
@@ -331,7 +343,6 @@ body {
 .R-body table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: 15px; margin: 0 0 26px; }
 .R-body th { text-align: left; font-weight: 600; border-bottom: 1px solid var(--ink); padding: 8px 10px; }
 .R-body td { padding: 8px 10px; border-bottom: 1px solid var(--line); color: var(--ink-soft); vertical-align: top; }
-.R-body .icon.icon-link::after { content: " ↗"; color: var(--faint); }
 
 /* suggested posts (kept feature, redesigned look) */
 .R-next {

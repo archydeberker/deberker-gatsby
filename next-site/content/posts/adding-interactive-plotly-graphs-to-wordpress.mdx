@@ -6,7 +6,7 @@ excerpt: "Tips for adding interactive Plotly graphs to Wordpress and optimizing 
 featuredImage: "/imported/adding-interactive-plotly-graphs-to-wordpress/image-6-e1635698094359-22bf3cb7fb.png"
 ---
 
-For a [recent post](https://deberker.com/archy/should-we-be-building-west-facing-solar-panels/) I wanted to embed interactive graphs in WordPress, which I’ve never tried[31](#easy-footnote-bottom-31-875).
+For a [recent post](https://deberker.com/archy/should-we-be-building-west-facing-solar-panels/) I wanted to embed interactive graphs in WordPress, which I’ve never tried[^31].
 
 I’m a massive Plotly fan, and since the release of their [Express](https://www.google.com/search?client=safari&rls=en&q=introducing+plotly+express&ie=UTF-8&oe=UTF-8) API I’ve not used any other plotting library.
 
@@ -16,16 +16,16 @@ Table of Contents
 
 Toggle
 
-*   [Things that do not work](#Things_that_do_not_work)
-    *   [The official Plotly instructions](#The_official_Plotly_instructions)
-    *   [Pasting HTML](#Pasting_HTML)
-*   [What works](#What_works)
-    *   [Embedding Chart Studio graphs in an iframe](#Embedding_Chart_Studio_graphs_in_an_iframe)
-*   [Optimizing your charts for mobile](#Optimizing_your_charts_for_mobile)
-    *   [Make legends horizontal and put them at the top](#Make_legends_horizontal_and_put_them_at_the_top)
-    *   [Strip out the modebar and the Edit Chart link](#Strip_out_the_modebar_and_the_Edit_Chart_link)
-    *   [Split your titles onto multiple lines](#Split_your_titles_onto_multiple_lines)
-*   [Footnotes](#Footnotes)
+*   [Things that do not work](#things-that-do-not-work)
+    *   [The official Plotly instructions](#the-official-plotly-instructions)
+    *   [Pasting HTML](#pasting-html)
+*   [What works](#what-works)
+    *   [Embedding Chart Studio graphs in an iframe](#embedding-chart-studio-graphs-in-an-iframe)
+*   [Optimizing your charts for mobile](#optimizing-your-charts-for-mobile)
+    *   [Make legends horizontal and put them at the top](#make-legends-horizontal-and-put-them-at-the-top)
+    *   [Strip out the modebar and the Edit Chart link](#strip-out-the-modebar-and-the-edit-chart-link)
+    *   [Split your titles onto multiple lines](#split-your-titles-onto-multiple-lines)
+*   [Footnotes](#footnotes)
 
 #### Things that do not work
 
@@ -159,4 +159,4 @@ fig = px.line(daily, x=daily.index, y=['South earnings', 'West earnings'], title
 
 #### Footnotes
 
-1.  I know, I know, I should be using a statically rendered blog in Gatsby or Next.js, but I’ve got a bunch of old content here that I’m loathe to migrate[](#easy-footnote-31-875)
+[^31]: I know, I know, I should be using a statically rendered blog in Gatsby or Next.js, but I’ve got a bunch of old content here that I’m loathe to migrate

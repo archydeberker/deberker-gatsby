@@ -24,6 +24,9 @@
   --accent-tint:  color-mix(in srgb, var(--accent) 9%, transparent);
   --accent-line:  color-mix(in srgb, var(--accent) 28%, var(--line));
 
+  /* secondary accent — blue-green, near-complement of the coral */
+  --secondary:    #1F9E96;
+
   --serif: var(--font-serif), Georgia, "Times New Roman", serif;
   --sans:  var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   --mono:  var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
@@ -93,6 +96,20 @@ body {
 .nav a.active::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: -6px;
   height: 2px; background: var(--accent);
+}
+
+/* ============================================================
+   READING PROGRESS BAR — sits flush below the sticky top bar
+   ============================================================ */
+.reading-progress {
+  position: fixed; left: 0; right: 0; top: 76px; z-index: 49;
+  height: 3px; pointer-events: none;
+}
+.reading-progress-fill {
+  height: 100%; width: 100%;
+  transform-origin: left center; transform: scaleX(0);
+  background: color-mix(in srgb, var(--secondary) 35%, transparent);
+  will-change: transform;
 }
 
 /* ============================================================
@@ -399,6 +416,7 @@ body {
    ============================================================ */
 @media (max-width: 720px) {
   .topbar { height: 60px; padding: 0 16px; }
+  .reading-progress { top: 60px; }
   .brand-full { display: none; }
   .brand-mono {
     display: inline; font-family: var(--mono); font-weight: 700;

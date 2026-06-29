@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import ReadingProgress from '@/components/reading-progress';
 import SuggestedPosts from '@/components/suggested-posts';
 import {
   formatDateLong,
@@ -48,6 +49,7 @@ export default async function BlogPostPage({ params }: PostPageProps) {
 
   return (
     <article className="R-article">
+      <ReadingProgress />
       <div className="R-col">
         <Link href="/" className="R-back">
           <span className="arr">←</span> Back to writing

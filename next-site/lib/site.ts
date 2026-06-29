@@ -6,3 +6,6 @@ export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://archy.deber
   '',
 );
 export const rssPath = '/rss.xml';
+// Public Fathom site ID (carried over from the legacy Gatsby config). It ships in
+// the client script tag, so it is not a secret; an env var can still override it.
+export const fathomSiteId = process.env.NEXT_PUBLIC_FATHOM_SITE_ID ?? 'XVRONDCU';

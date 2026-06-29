@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Hanken_Grotesk, JetBrains_Mono, Newsreader } from 'next/font/google';
+import Analytics from '@/components/analytics';
 import SiteShell from '@/components/site-shell';
 import { rssPath, siteDescription, siteName, siteUrl } from '@/lib/site';
 import './tailwind.css';
@@ -58,6 +59,7 @@ export default function RootLayout({
     >
       <body className="font-sans antialiased">
         <SiteShell>{children}</SiteShell>
+        <Analytics />
       </body>
     </html>
   );

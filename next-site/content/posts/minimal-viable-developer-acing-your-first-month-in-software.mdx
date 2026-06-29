@@ -12,7 +12,7 @@ This is a guide to the tools, skills, and rituals you’ll encounter in a real s
 
 It’s applicable to data science, backend, or frontend roles; it’s about everything that’s _not_ writing your favourite flavour of code.
 
-This guide is going to be more useful for people joining startups than established companies. FAANG [17](#easy-footnote-bottom-17-916) companies will put you through 4+ weeks of formal onboarding. In a startup you’re more likely to be handed a laptop and a t-shirt, and asked to join your colleagues in desperately trying to steer a sinking ship towards profitability. Let’s get you from deadweight to oarsman in the briefest time possible.  
+This guide is going to be more useful for people joining startups than established companies. FAANG[^17] companies will put you through 4+ weeks of formal onboarding. In a startup you’re more likely to be handed a laptop and a t-shirt, and asked to join your colleagues in desperately trying to steer a sinking ship towards profitability. Let’s get you from deadweight to oarsman in the briefest time possible.  
 
 Table of Contents
 
@@ -46,7 +46,7 @@ Rather than setting aside a week to read the entire codebase, learn about users,
 
 The Code Lifecycle. Move through this loop as quickly as possible to maximize your learning on the job. The ship corresponds to deployment (also known as shipping). Source: author
 
-Software building is an iterative process. We decide what needs to be done, write code to do it, have it reviewed by our peers, and deploy it, and then do it all again. The faster you are able to iterate, the faster you will learn and the more you will get done [18](#easy-footnote-bottom-18-916). 
+Software building is an iterative process. We decide what needs to be done, write code to do it, have it reviewed by our peers, and deploy it, and then do it all again. The faster you are able to iterate, the faster you will learn and the more you will get done[^18]. 
 
 Your goal should be to **maximize the number of these cycles** that you go through in your first few months of the job. It’s good for **you** to optimize for this, because it maximizes your learning, and it’s good for the **organization**, because they get lots of chances to nudge you towards valuable outcomes.
 
@@ -62,7 +62,7 @@ Here are the steps we’re going to discuss, and you should figure out fast:
 
 4\. **Review**: How do people review my work?
 
-5\. **Deploy**: And how does it finally get deployed? [19](#easy-footnote-bottom-19-916)
+5\. **Deploy**: And how does it finally get deployed?[^19]
 
 #### Why should you focus on executing this lifecycle?
 
@@ -72,7 +72,7 @@ Please don’t do this. Instead, get really fast at navigating the systems you n
 
 If you’d like to shadow somebody, pick the person on the team who seems to get through the most tasks, even if they’re not the most sexy or interesting ones. They’ve figured out how to go through this cycle quickly.
 
-Why is it so important to get quick at these steps? Those 5 steps are a fixed cost to any change you want to make to the codebase. Their cost doesn’t scale with the complexity of the code you’re writing[20](#easy-footnote-bottom-20-916) . This means that they take roughly the same amount of time whether you’re fixing a typo or rewriting an entire API.
+Why is it so important to get quick at these steps? Those 5 steps are a fixed cost to any change you want to make to the codebase. Their cost doesn’t scale with the complexity of the code you’re writing[^20] . This means that they take roughly the same amount of time whether you’re fixing a typo or rewriting an entire API.
 
 [![](/imported/minimal-viable-developer-acing-your-first-month-in-software/cycle-time-940x186-83e2c0178a.png)](https://i0.wp.com/deberker.com/archy/wp-content/uploads/2021/07/cycle-time.png?ssl=1)
 
@@ -95,7 +95,7 @@ The good news: nobody you’re working with learned it at university either!
 Everybody who works in software figures things out via roughly the same three tactics:
 
 1.  **Google** stuff (usually resulting in Stack Overflow)
-2.  Read a book if they’re old school, or a blogpost if they have a short attention span [21](#easy-footnote-bottom-21-916)
+2.  Read a book if they’re old school, or a blogpost if they have a short attention span[^21]
 3.  Ask somebody who might know
 
 Please don’t feel anxious or embarrassed about leaning heavily on #3.
@@ -144,9 +144,9 @@ NrRFi9wrf+M7Q== schacon@mylaptop.local
 ```
 
   
-The private key stays, encrypted, on your computer. Github will send data encoded with the public key that can only be decrypted using the private key. [22](#easy-footnote-bottom-22-916). [Here’s an overview of SSH](https://www.hostinger.co.uk/tutorials/ssh-tutorial-how-does-ssh-work) for more detail.
+The private key stays, encrypted, on your computer. Github will send data encoded with the public key that can only be decrypted using the private key.[^22]. [Here’s an overview of SSH](https://www.hostinger.co.uk/tutorials/ssh-tutorial-how-does-ssh-work) for more detail.
 
-I would advise _against_ setting a passphrase on your SSH key. Your computer is already password protected (right?) and I don’t think it’s helpful to have this additional barrier to iteration. [23](#easy-footnote-bottom-23-916)
+I would advise _against_ setting a passphrase on your SSH key. Your computer is already password protected (right?) and I don’t think it’s helpful to have this additional barrier to iteration. [^23]
 
 #### 3\. Use a terminal to clone the repo 
 
@@ -208,7 +208,7 @@ In many contexts, you’re probably also going to use a tool called **Docker**.
 
 **Docker** is a tool for creating isolated, repeatable computing environments, like little virtual machines running within your computer with a tightly controlled environment. These environments – **containers**– solve the common issue of environmental discrepancies – some people work on Mac 10.13, others on Mac OSX 10.9, various different Linux distributions or even (shock horror) Windows.
 
-The best analogy I’ve been able to conceive of is musical. Docker starts with a **Dockerfile**, which is like a piece of sheet music specifying a song. When it’s compiled by Docker, it becomes a **Docker Image**, which is somewhat like an MP3 of that song. Whenever we want to launch a computing job from the docker image the result is a **Docker container**, which is a ephemeral (meaning short-lived), consistent (it’s always the same) computing environment that’s specified by the image – in the same way that playing your MP3 produces a short experience that’s exactly the same each time you do it.[24](#easy-footnote-bottom-24-916)
+The best analogy I’ve been able to conceive of is musical. Docker starts with a **Dockerfile**, which is like a piece of sheet music specifying a song. When it’s compiled by Docker, it becomes a **Docker Image**, which is somewhat like an MP3 of that song. Whenever we want to launch a computing job from the docker image the result is a **Docker container**, which is a ephemeral (meaning short-lived), consistent (it’s always the same) computing environment that’s specified by the image – in the same way that playing your MP3 produces a short experience that’s exactly the same each time you do it.[^24]
 
 [![](/imported/minimal-viable-developer-acing-your-first-month-in-software/diagrams-940x488-34437f8bf5.jpg)](https://i0.wp.com/deberker.com/archy/wp-content/uploads/2021/08/Diagrams.jpg?ssl=1)
 
@@ -540,7 +540,7 @@ Particularly if you’re working with a multicomponent system – frontend, back
 
 #### Check that tests pass
 
-Another surprisingly common error is to fail to run the tests locally.[25](#easy-footnote-bottom-25-916)
+Another surprisingly common error is to fail to run the tests locally.[^25]
 
 You then push your code, go and do something else, and realize 30 minutes later that the tests have failed when the continuous integration system has attempted to run them. By this point you’re working on something else, and reviewing your code has slid to the bottom of your reviewer’s to do list.
 
@@ -567,10 +567,10 @@ Some pointers on humane code review:
 3.  **Be constructive**. If you’re suggesting a change, consider offering a piece of working code that does what you’re suggesting “If we use a dictionary instead like `a = dict(A=1)` that will be more efficient”
 4.  **Is it wrong or different?** Sometimes people will complete a task in a way you didn’t expect. The knee jerk reaction is to tell them this. Before you do so, consider whether their approach is actually worse, or just different from what you had in mind.
 5.  **Use emojis** to soften the tone of your critical comments 🤨 🙋💡
-6.  **Not everything has to be negative** in a code review! If you think something is cool, or you learned something, say so. [26](#easy-footnote-bottom-26-916)
+6.  **Not everything has to be negative** in a code review! If you think something is cool, or you learned something, say so.[^26]
 7.  **You can ask questions**! The review doesn’t have to unidirectional – the person who wrote the code is probably more than happy to explain in depth the neat way they found to reduce time complexity from O(n) to O(1) – take advantage of this.
 
-For more tips, checkout [Google’s Engineering Best Practices on Code Review](https://google.github.io/eng-practices/review/reviewer/) [27](#easy-footnote-bottom-27-916).
+For more tips, checkout [Google’s Engineering Best Practices on Code Review](https://google.github.io/eng-practices/review/reviewer/)[^27].
 
 Finally, remember that it’s much easier to fix a broken function than it is to fix a broken relationship. Particularly if you’re an engineer.
 
@@ -594,11 +594,11 @@ This is typically handled by the same service as your CI, either your version co
 
 When people talk about software being deployed “on the cloud”, they really mean that it’s deployed in a big data centre owned by a company that doesn’t pay much tax.
 
-Amazon Web Services (AWS) and Google Cloud Platform (GCP) are the most popular, with Microsoft Azure and Heroku favoured by old school companies and hobbyists respectively [28](#easy-footnote-bottom-28-916).
+Amazon Web Services (AWS) and Google Cloud Platform (GCP) are the most popular, with Microsoft Azure and Heroku favoured by old school companies and hobbyists respectively[^28].
 
 The alternative is local or **on premise** deployment, where code is running in a specific, named data centre – this is rare, and typically only used in very sensitive contexts (e.g. healthcare) or when there are unusual hardware requirements (e.g. deep learning).
 
-If you’re lucky, you won’t have to tangle very much with the hosting environment in your first role. Configuring and maintaining deployment environments is an art unto itself, giving rise to the discipline of DevOps, which is 50% people slick consultants in blazers talking about boosting velocities and 50% dudes [29](#easy-footnote-bottom-29-916) in Metallica t-shirts who have a supernatural ability to figure out why your build is failing.
+If you’re lucky, you won’t have to tangle very much with the hosting environment in your first role. Configuring and maintaining deployment environments is an art unto itself, giving rise to the discipline of DevOps, which is 50% people slick consultants in blazers talking about boosting velocities and 50% dudes[^29] in Metallica t-shirts who have a supernatural ability to figure out why your build is failing.
 
 Broadly speaking, your hosting environment is going to have to help you:
 
@@ -647,16 +647,16 @@ And if you’re interested in other stuff I’ve written, here are a few more pi
 
 #### Footnotes
 
-1.  Facebook, Apple, Amazon, Netflix, Google: the big boys[](#easy-footnote-17-916)
-2.  This idea is closely related to Agile practices, but was really [pioneered in the military](https://deberker.com/archy/the-customer-is-the-enemy/), by fighter pilots like [John Boyd](https://en.wikipedia.org/wiki/John_Boyd_\(military_strategist\))[](#easy-footnote-18-916)
-3.  Deploying is also known as “shipping” software[](#easy-footnote-19-916)
-4.  Review does typically take longer for more complex work, so this is only sort-of true[](#easy-footnote-20-916)
-5.  I’m in this category[](#easy-footnote-21-916)
-6.  Frankly I find it all a bit confusing; thanks to [Josh](https://www.linkedin.com/in/joshua-greenhalgh-ab337090/) for his pointers on this section[](#easy-footnote-22-916)
-7.  This is probably not best practice and against convention at many companies, but if given a choice, opt for speed[](#easy-footnote-23-916)
-8.  If this analogy doesn’t make sense to you, [here’s an alternative one from Vincent Warmerdam](https://twitter.com/fishnets88/status/1426609875078033409): the Dockerfile is like the blueprint for a machine in a factory, the Docker images are the machines, and the containers are the thousands of identical widgets made by the machines[](#easy-footnote-24-916)
-9.  This is so common that many repos will have a pre-commit hook that checks that unit tests and linting passes before allowing you to commit your code. It’s a bit painful, but it works.[](#easy-footnote-25-916)
-10.  You might see the acronym TIL – Today I Learned – used in this context[](#easy-footnote-26-916)
-11.  Thanks Jonny Linton for this reference[](#easy-footnote-27-916)
-12.  I really, really like Heroku, and I wish AWS was 1/10th as usable[](#easy-footnote-28-916)
-13.  Yes, I’m sorry, it is mostly dudes[](#easy-footnote-29-916)
+[^17]: Facebook, Apple, Amazon, Netflix, Google: the big boys
+[^18]: This idea is closely related to Agile practices, but was really [pioneered in the military](https://deberker.com/archy/the-customer-is-the-enemy/), by fighter pilots like [John Boyd](https://en.wikipedia.org/wiki/John_Boyd_\(military_strategist\))
+[^19]: Deploying is also known as “shipping” software
+[^20]: Review does typically take longer for more complex work, so this is only sort-of true
+[^21]: I’m in this category
+[^22]: Frankly I find it all a bit confusing; thanks to [Josh](https://www.linkedin.com/in/joshua-greenhalgh-ab337090/) for his pointers on this section
+[^23]: This is probably not best practice and against convention at many companies, but if given a choice, opt for speed
+[^24]: If this analogy doesn’t make sense to you, [here’s an alternative one from Vincent Warmerdam](https://twitter.com/fishnets88/status/1426609875078033409): the Dockerfile is like the blueprint for a machine in a factory, the Docker images are the machines, and the containers are the thousands of identical widgets made by the machines
+[^25]: This is so common that many repos will have a pre-commit hook that checks that unit tests and linting passes before allowing you to commit your code. It’s a bit painful, but it works.
+[^26]: You might see the acronym TIL – Today I Learned – used in this context
+[^27]: Thanks Jonny Linton for this reference
+[^28]: I really, really like Heroku, and I wish AWS was 1/10th as usable
+[^29]: Yes, I’m sorry, it is mostly dudes

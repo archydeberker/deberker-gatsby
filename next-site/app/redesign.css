@@ -24,9 +24,6 @@
   --accent-tint:  color-mix(in srgb, var(--accent) 9%, transparent);
   --accent-line:  color-mix(in srgb, var(--accent) 28%, var(--line));
 
-  /* secondary accent — blue-green, near-complement of the coral */
-  --secondary:    #1F9E96;
-
   --serif: var(--font-serif), Georgia, "Times New Roman", serif;
   --sans:  var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   --mono:  var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
@@ -108,7 +105,7 @@ body {
 .reading-progress-fill {
   height: 100%; width: 100%;
   transform-origin: left center; transform: scaleX(0);
-  background: color-mix(in srgb, var(--secondary) 35%, transparent);
+  background: color-mix(in srgb, var(--accent) 64%, transparent);
   will-change: transform;
 }
 
